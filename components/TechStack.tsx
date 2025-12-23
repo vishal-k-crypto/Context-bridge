@@ -1,106 +1,84 @@
 "use client";
 
 import { motion } from "framer-motion";
-import {
-  Users,
-  FolderKanban,
-  Database,
-  ShoppingCart,
-  GraduationCap,
-  Code,
-} from "lucide-react";
+import { useInView } from "react-intersection-observer";
 
-const categories = [
+const techCategories = [
   {
-    icon: Users,
-    name: "CRMs",
-    tools: ["Salesforce", "HubSpot", "Pipedrive"],
+    category: "AI & MCP",
+    tools: ["Claude MCP", "OpenAI API", "RAG Systems", "Vector DBs"],
   },
   {
-    icon: FolderKanban,
-    name: "Project Management",
-    tools: ["Jira", "Asana", "Linear", "Monday.com"],
+    category: "Backend",
+    tools: ["Python", "Node.js", "FastAPI", "Express"],
   },
   {
-    icon: Database,
-    name: "Databases",
-    tools: ["PostgreSQL", "MongoDB", "MySQL", "Redis"],
+    category: "Frontend",
+    tools: ["React", "Next.js", "Vue", "Tailwind CSS"],
   },
   {
-    icon: ShoppingCart,
-    name: "E-commerce",
-    tools: ["Shopify", "WooCommerce", "BigCommerce"],
+    category: "Databases",
+    tools: ["PostgreSQL", "MongoDB", "Redis", "Supabase"],
   },
   {
-    icon: GraduationCap,
-    name: "Education",
-    tools: ["Canvas", "Moodle", "Custom LMS"],
+    category: "APIs",
+    tools: ["REST", "GraphQL", "Webhooks", "WebSockets"],
   },
   {
-    icon: Code,
-    name: "Custom APIs",
-    tools: ["REST", "GraphQL", "SOAP"],
+    category: "Tools We Integrate",
+    tools: ["Salesforce", "HubSpot", "Jira", "Shopify", "Custom APIs"],
   },
 ];
 
 export default function TechStack() {
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
+
   return (
-    <section className="section-padding bg-white">
-      <div className="container-max">
+    <section className="py-24 bg-white" ref={ref}>
+      <div className="container mx-auto px-4">
         <motion.div
-          className="text-center max-w-3xl mx-auto"
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
-            We Integrate With Your Tools
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900">
+            Our Tech Stack
           </h2>
-          <p className="mt-4 text-lg text-gray-600">
-            If it has an API, we can connect it to Claude
+          <p className="text-xl text-slate-600">
+            If it has an API, we can connect it
           </p>
         </motion.div>
 
-        <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {categories.map((category, index) => (
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          {techCategories.map((cat, index) => (
             <motion.div
-              key={category.name}
-              className="p-6 bg-gray-50 rounded-xl border border-gray-100"
+              key={cat.category}
               initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.05 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: index * 0.1, duration: 0.5 }}
+              className="p-6 bg-gradient-to-br from-slate-50 to-blue-50 rounded-xl border border-slate-200"
             >
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center">
-                  <category.icon className="h-5 w-5 text-primary-800" />
-                </div>
-                <h3 className="font-semibold text-gray-900">{category.name}</h3>
-              </div>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {category.tools.map((tool) => (
-                  <span
+              <h3 className="font-bold text-lg mb-4 text-slate-900">
+                {cat.category}
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {cat.tools.map((tool, i) => (
+                  <motion.span
                     key={tool}
-                    className="px-3 py-1 bg-white text-sm text-gray-600 rounded-full border border-gray-200"
+                    initial={{ scale: 0 }}
+                    animate={inView ? { scale: 1 } : {}}
+                    transition={{ delay: index * 0.1 + i * 0.05 }}
+                    whileHover={{ scale: 1.1, y: -2 }}
+                    className="px-3 py-1 bg-white rounded-lg text-sm shadow-sm border border-slate-200 hover:border-cyan-400 hover:shadow-md transition-all cursor-default"
                   >
                     {tool}
-                  </span>
+                  </motion.span>
                 ))}
               </div>
             </motion.div>
           ))}
         </div>
-
-        <motion.p
-          className="mt-8 text-center text-gray-500"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        >
-          ...and any other system with an API
-        </motion.p>
       </div>
     </section>
   );

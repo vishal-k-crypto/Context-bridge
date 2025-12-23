@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import SmoothScroll from "@/components/SmoothScroll";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -8,14 +9,15 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Context Bridge - Custom AI Integrations for Business Tools",
+  title: "Context Bridge - Full-Stack Automation Agency",
   description:
-    "Connect Claude AI to your business tools with custom MCP servers. Fast delivery, production-grade code, full documentation. Starting at $2,500.",
+    "Connect your business tools with custom API integrations, MCP servers, dashboards, and automation. One developer handles everything—APIs, AI, web dev. $2K-25K projects delivered in weeks.",
   keywords:
-    "MCP server, Claude AI integration, AI tool integration, custom API integration, business automation",
+    "API integration, MCP server, Claude AI integration, business automation, custom dashboard, workflow automation, full-stack development",
   openGraph: {
-    title: "Context Bridge - AI Integrations",
-    description: "Custom MCP servers connecting Claude to your business tools",
+    title: "Context Bridge - Full-Stack Automation Agency",
+    description:
+      "APIs, AI Integrations, Dashboards, Automation. One developer. Complete systems. Built in weeks.",
     url: "https://contextbridge.systems",
     siteName: "Context Bridge",
     locale: "en_US",
@@ -23,8 +25,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Context Bridge - Custom AI Integrations",
-    description: "Custom MCP servers connecting Claude to your business tools",
+    title: "Context Bridge - Full-Stack Automation Agency",
+    description:
+      "APIs, AI Integrations, Dashboards, Automation. One developer. Complete systems.",
   },
   robots: {
     index: true,
@@ -46,7 +49,9 @@ export default function RootLayout({
           src="https://plausible.io/js/script.js"
         />
       </head>
-      <body className="font-sans">{children}</body>
+      <body className="font-sans">
+        <SmoothScroll>{children}</SmoothScroll>
+      </body>
     </html>
   );
 }

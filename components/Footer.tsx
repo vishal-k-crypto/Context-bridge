@@ -1,47 +1,47 @@
 "use client";
 
-import { Mail, Linkedin, ExternalLink } from "lucide-react";
+import { motion } from "framer-motion";
+import { Mail, Linkedin } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-gray-400">
-      <div className="container-max section-padding py-12">
-        <div className="grid md:grid-cols-3 gap-8">
+    <footer className="bg-slate-900 text-gray-400">
+      <div className="container mx-auto px-4 py-16">
+        <div className="grid md:grid-cols-3 gap-12">
           {/* Brand */}
-          <div>
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-accent-500 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">CB</span>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-lg">CB</span>
               </div>
-              <span className="text-white font-semibold text-lg">
-                Context Bridge
-              </span>
+              <span className="text-white font-bold text-xl">Context Bridge</span>
             </div>
-            <p className="mt-4 text-sm leading-relaxed">
-              Custom MCP servers connecting Claude AI to your business tools.
-              Fast delivery, production-grade code, full documentation.
+            <p className="text-sm leading-relaxed">
+              Full-stack automation agency. APIs, AI integrations, dashboards,
+              and automation—all from one partner.
             </p>
-          </div>
+          </motion.div>
 
-          {/* Links */}
-          <div>
+          {/* Quick Links */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
             <h3 className="text-white font-semibold mb-4">Quick Links</h3>
-            <ul className="space-y-2 text-sm">
+            <ul className="space-y-3 text-sm">
               <li>
                 <a
-                  href="#solution"
-                  className="hover:text-white transition-colors"
+                  href="#services"
+                  className="hover:text-cyan-400 transition-colors"
                 >
-                  How It Works
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="hover:text-white transition-colors flex items-center gap-1"
-                >
-                  Case Studies
-                  <ExternalLink className="h-3 w-3" />
+                  Services
                 </a>
               </li>
               <li>
@@ -49,22 +49,27 @@ export default function Footer() {
                   href="https://calendly.com/contextbridge"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-white transition-colors"
+                  className="hover:text-cyan-400 transition-colors"
                 >
                   Book a Call
                 </a>
               </li>
             </ul>
-          </div>
+          </motion.div>
 
           {/* Contact */}
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
             <h3 className="text-white font-semibold mb-4">Contact</h3>
             <ul className="space-y-3 text-sm">
               <li>
                 <a
                   href="mailto:vishal@contextbridge.systems"
-                  className="flex items-center gap-2 hover:text-white transition-colors"
+                  className="flex items-center gap-2 hover:text-cyan-400 transition-colors"
                 >
                   <Mail className="h-4 w-4" />
                   vishal@contextbridge.systems
@@ -75,34 +80,40 @@ export default function Footer() {
                   href="https://linkedin.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 hover:text-white transition-colors"
+                  className="flex items-center gap-2 hover:text-cyan-400 transition-colors"
                 >
                   <Linkedin className="h-4 w-4" />
                   LinkedIn
                 </a>
               </li>
             </ul>
-          </div>
+          </motion.div>
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-12 pt-8 border-t border-gray-800 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="mt-12 pt-8 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-4"
+        >
           <p className="text-sm">
             &copy; {new Date().getFullYear()} Context Bridge. Built for the
             AI-first era.
           </p>
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-slate-600">
             Deployed on{" "}
             <a
               href="https://vercel.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-gray-400 transition-colors"
+              className="hover:text-slate-400 transition-colors"
             >
               Vercel
             </a>
           </p>
-        </div>
+        </motion.div>
       </div>
     </footer>
   );

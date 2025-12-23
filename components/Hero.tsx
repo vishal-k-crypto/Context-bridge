@@ -2,252 +2,133 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import AnimatedFlowDiagram from "./AnimatedFlowDiagram";
 
 const CALENDLY_URL = "https://calendly.com/contextbridge";
 
 export default function Hero() {
-  const fadeInUp = {
-    initial: { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.5 },
-  };
-
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-white to-gray-50">
+    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white overflow-hidden">
+      {/* Animated background gradient */}
+      <motion.div
+        className="absolute inset-0 opacity-30"
+        animate={{
+          background: [
+            "radial-gradient(circle at 20% 50%, #3b82f6 0%, transparent 50%)",
+            "radial-gradient(circle at 80% 50%, #06b6d4 0%, transparent 50%)",
+            "radial-gradient(circle at 50% 80%, #3b82f6 0%, transparent 50%)",
+            "radial-gradient(circle at 20% 50%, #3b82f6 0%, transparent 50%)",
+          ],
+        }}
+        transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+      />
+
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary-100 rounded-full blur-3xl opacity-50" />
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-accent-100 rounded-full blur-3xl opacity-50" />
+        <div className="absolute -top-40 -right-40 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl" />
+        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl" />
       </div>
 
-      <div className="relative section-padding container-max w-full">
-        <div className="text-center max-w-4xl mx-auto">
-          <motion.h1
-            className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 tracking-tight text-balance"
-            {...fadeInUp}
-          >
-            Connect Claude AI to Your Business Tools
-          </motion.h1>
-
-          <motion.p
-            className="mt-6 text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto text-balance"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
-            Custom MCP servers that bridge the gap between AI assistants and
-            your existing systems—built in days, not months.
-          </motion.p>
-
+      <div className="relative container mx-auto px-4 py-20 z-10">
+        <div className="text-center max-w-5xl mx-auto">
+          {/* Badge */}
           <motion.div
-            className="mt-10 flex flex-col sm:flex-row gap-4 justify-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+            className="inline-block mb-6"
           >
-            <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">
-              <button className="btn-primary w-full sm:w-auto">
-                Book Discovery Call
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </button>
-            </a>
-            <a href="#solution">
-              <button className="btn-secondary w-full sm:w-auto">
-                See How It Works
-              </button>
-            </a>
+            <span className="px-4 py-2 bg-cyan-500/20 border border-cyan-500/50 rounded-full text-cyan-400 text-sm font-medium backdrop-blur-sm">
+              Full-Stack Automation Agency
+            </span>
           </motion.div>
 
-          {/* Animated Diagram */}
-          <motion.div
-            className="mt-16 sm:mt-20"
-            initial={{ opacity: 0, y: 40 }}
+          {/* Main Headline */}
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-cyan-200 to-blue-200 leading-tight"
           >
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
-              {/* Claude AI Box */}
-              <motion.div
-                className="flex items-center justify-center w-40 sm:w-48 h-20 sm:h-24 bg-primary-800 text-white rounded-xl shadow-lg font-semibold text-sm sm:text-base"
-                animate={{ scale: [1, 1.02, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              >
-                Claude AI
-              </motion.div>
+            Your Business Tools,
+            <br />
+            Finally Connected
+          </motion.h1>
 
-              {/* Arrow 1 */}
-              <div className="hidden sm:flex items-center">
-                <svg
-                  width="60"
-                  height="24"
-                  viewBox="0 0 60 24"
-                  className="text-accent-500"
-                >
-                  <defs>
-                    <marker
-                      id="arrowhead1"
-                      markerWidth="10"
-                      markerHeight="7"
-                      refX="9"
-                      refY="3.5"
-                      orient="auto"
-                    >
-                      <polygon
-                        points="0 0, 10 3.5, 0 7"
-                        fill="currentColor"
-                      />
-                    </marker>
-                  </defs>
-                  <line
-                    x1="0"
-                    y1="12"
-                    x2="50"
-                    y2="12"
-                    stroke="currentColor"
-                    strokeWidth="3"
-                    strokeDasharray="6 3"
-                    markerEnd="url(#arrowhead1)"
-                    className="animate-flow"
-                  />
-                </svg>
-              </div>
+          {/* Subheadline */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+            className="text-lg sm:text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-4"
+          >
+            APIs • AI Integrations • Dashboards • Automation
+          </motion.p>
 
-              {/* Mobile Arrow */}
-              <div className="sm:hidden flex flex-col items-center py-2">
-                <svg
-                  width="24"
-                  height="40"
-                  viewBox="0 0 24 40"
-                  className="text-accent-500"
-                >
-                  <defs>
-                    <marker
-                      id="arrowheadMobile1"
-                      markerWidth="10"
-                      markerHeight="7"
-                      refX="9"
-                      refY="3.5"
-                      orient="auto"
-                    >
-                      <polygon
-                        points="0 0, 10 3.5, 0 7"
-                        fill="currentColor"
-                      />
-                    </marker>
-                  </defs>
-                  <line
-                    x1="12"
-                    y1="0"
-                    x2="12"
-                    y2="30"
-                    stroke="currentColor"
-                    strokeWidth="3"
-                    strokeDasharray="6 3"
-                    markerEnd="url(#arrowheadMobile1)"
-                    className="animate-flow"
-                  />
-                </svg>
-              </div>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8, duration: 0.8 }}
+            className="text-lg sm:text-xl text-cyan-400 font-medium mb-10"
+          >
+            One developer. Complete systems. Built in weeks.
+          </motion.p>
 
-              {/* MCP Server Box */}
-              <motion.div
-                className="flex items-center justify-center w-40 sm:w-48 h-20 sm:h-24 bg-accent-500 text-white rounded-xl shadow-lg font-semibold text-sm sm:text-base"
-                animate={{ scale: [1, 1.03, 1] }}
-                transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
-              >
-                MCP Server
-              </motion.div>
+          {/* CTA Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1, duration: 0.6 }}
+            className="flex gap-4 justify-center flex-wrap"
+          >
+            <motion.a
+              href={CALENDLY_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(6, 182, 212, 0.5)" }}
+              whileTap={{ scale: 0.95 }}
+              className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg font-semibold text-lg shadow-xl inline-flex items-center gap-2"
+            >
+              Book Discovery Call
+              <ArrowRight className="w-5 h-5" />
+            </motion.a>
 
-              {/* Arrow 2 */}
-              <div className="hidden sm:flex items-center">
-                <svg
-                  width="60"
-                  height="24"
-                  viewBox="0 0 60 24"
-                  className="text-accent-500"
-                >
-                  <defs>
-                    <marker
-                      id="arrowhead2"
-                      markerWidth="10"
-                      markerHeight="7"
-                      refX="9"
-                      refY="3.5"
-                      orient="auto"
-                    >
-                      <polygon
-                        points="0 0, 10 3.5, 0 7"
-                        fill="currentColor"
-                      />
-                    </marker>
-                  </defs>
-                  <line
-                    x1="0"
-                    y1="12"
-                    x2="50"
-                    y2="12"
-                    stroke="currentColor"
-                    strokeWidth="3"
-                    strokeDasharray="6 3"
-                    markerEnd="url(#arrowhead2)"
-                    className="animate-flow"
-                  />
-                </svg>
-              </div>
+            <motion.a
+              href="#services"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-8 py-4 border-2 border-cyan-500/50 rounded-lg font-semibold text-lg backdrop-blur-sm hover:bg-cyan-500/10 transition-colors inline-flex items-center"
+            >
+              See What We Build
+            </motion.a>
+          </motion.div>
 
-              {/* Mobile Arrow */}
-              <div className="sm:hidden flex flex-col items-center py-2">
-                <svg
-                  width="24"
-                  height="40"
-                  viewBox="0 0 24 40"
-                  className="text-accent-500"
-                >
-                  <defs>
-                    <marker
-                      id="arrowheadMobile2"
-                      markerWidth="10"
-                      markerHeight="7"
-                      refX="9"
-                      refY="3.5"
-                      orient="auto"
-                    >
-                      <polygon
-                        points="0 0, 10 3.5, 0 7"
-                        fill="currentColor"
-                      />
-                    </marker>
-                  </defs>
-                  <line
-                    x1="12"
-                    y1="0"
-                    x2="12"
-                    y2="30"
-                    stroke="currentColor"
-                    strokeWidth="3"
-                    strokeDasharray="6 3"
-                    markerEnd="url(#arrowheadMobile2)"
-                    className="animate-flow"
-                  />
-                </svg>
-              </div>
-
-              {/* Your Tools Box */}
-              <motion.div
-                className="flex items-center justify-center w-40 sm:w-48 h-20 sm:h-24 bg-gray-800 text-white rounded-xl shadow-lg font-semibold text-sm sm:text-base"
-                animate={{ scale: [1, 1.02, 1] }}
-                transition={{ duration: 2, repeat: Infinity, delay: 1 }}
-              >
-                Your Tools
-              </motion.div>
-            </div>
-
-            <p className="mt-8 text-sm text-gray-500">
-              Seamless, secure data flow between AI and your systems
-            </p>
+          {/* Animated Flow Diagram */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 1.2, duration: 0.8 }}
+            className="mt-16 sm:mt-20"
+          >
+            <AnimatedFlowDiagram />
           </motion.div>
         </div>
       </div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        animate={{ y: [0, 10, 0] }}
+        transition={{ duration: 2, repeat: Infinity }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+      >
+        <div className="w-6 h-10 border-2 border-cyan-400/50 rounded-full flex items-start justify-center p-2">
+          <motion.div
+            animate={{ y: [0, 12, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="w-1 h-2 bg-cyan-400 rounded-full"
+          />
+        </div>
+      </motion.div>
     </section>
   );
 }

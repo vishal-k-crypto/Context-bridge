@@ -1,104 +1,173 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Check, ArrowRight } from "lucide-react";
+import { useInView } from "react-intersection-observer";
+import { ArrowRight } from "lucide-react";
 
 const CALENDLY_URL = "https://calendly.com/contextbridge";
 
-const features = [
-  "Discovery & API analysis",
-  "Custom MCP server development",
-  "Authentication & security setup",
-  "Full documentation & code handoff",
-  "Deployment support",
-  "30-day post-launch support",
+const packages = [
+  {
+    name: "AI Integration",
+    price: "$2-5K",
+    description: "Perfect for solo founders and consultants",
+    features: [
+      "MCP server for 1-3 tools",
+      "Claude AI integration",
+      "Basic automation workflows",
+      "Full documentation",
+    ],
+    highlighted: false,
+  },
+  {
+    name: "Operations Automation",
+    price: "$5-10K",
+    description: "For growing agencies and small teams",
+    features: [
+      "3-5 API integrations",
+      "Custom dashboard",
+      "MCP integration",
+      "Workflow automation",
+      "30 days support",
+    ],
+    highlighted: true,
+  },
+  {
+    name: "Complete Platform",
+    price: "$10-25K",
+    description: "Full-scale systems for funded startups",
+    features: [
+      "Full-stack web application",
+      "Multiple API integrations",
+      "MCP infrastructure",
+      "Complete automation",
+      "Ongoing support",
+    ],
+    highlighted: false,
+  },
 ];
 
 export default function Pricing() {
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
+
   return (
-    <section className="section-padding bg-gradient-to-b from-blue-50 to-white">
-      <div className="container-max">
+    <section className="py-24 bg-gradient-to-br from-slate-50 to-blue-50" ref={ref}>
+      <div className="container mx-auto px-4">
         <motion.div
-          className="text-center max-w-3xl mx-auto"
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900">
             Transparent Pricing
           </h2>
+          <p className="text-xl text-slate-600">
+            Choose the package that fits your needs
+          </p>
         </motion.div>
 
-        <motion.div
-          className="mt-12 max-w-lg mx-auto"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-        >
-          <div className="relative bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-            {/* Header */}
-            <div className="p-8 bg-primary-800 text-white text-center">
-              <h3 className="text-xl font-semibold">
-                Custom MCP Server Development
-              </h3>
-              <div className="mt-4">
-                <span className="text-sm opacity-80">Starting at</span>
-                <div className="text-5xl font-bold mt-1">$2,500</div>
-              </div>
-            </div>
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {packages.map((pkg, index) => (
+            <motion.div
+              key={pkg.name}
+              initial={{ opacity: 0, y: 30 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: index * 0.1, duration: 0.5 }}
+              whileHover={{ scale: 1.05, y: -10 }}
+              className={`p-8 rounded-2xl relative overflow-hidden ${
+                pkg.highlighted
+                  ? "bg-gradient-to-br from-blue-600 to-cyan-600 text-white shadow-2xl ring-4 ring-cyan-400 ring-offset-4"
+                  : "bg-white border-2 border-slate-200"
+              }`}
+            >
+              {pkg.highlighted && (
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={inView ? { scale: 1 } : {}}
+                  transition={{ delay: 0.3, type: "spring" }}
+                  className="absolute top-4 right-4"
+                >
+                  <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs font-bold">
+                    POPULAR
+                  </span>
+                </motion.div>
+              )}
 
-            {/* Features */}
-            <div className="p-8">
-              <p className="text-sm text-gray-500 mb-6 text-center">
-                Everything you need to connect Claude to your tools
+              <h3
+                className={`text-2xl font-bold mb-2 ${
+                  pkg.highlighted ? "text-white" : "text-slate-900"
+                }`}
+              >
+                {pkg.name}
+              </h3>
+
+              <div
+                className={`text-4xl font-bold mb-4 ${
+                  pkg.highlighted ? "text-cyan-200" : "text-blue-600"
+                }`}
+              >
+                {pkg.price}
+              </div>
+
+              <p
+                className={`mb-6 ${
+                  pkg.highlighted ? "text-cyan-50" : "text-slate-600"
+                }`}
+              >
+                {pkg.description}
               </p>
-              <ul className="space-y-4">
-                {features.map((feature) => (
-                  <li key={feature} className="flex items-start gap-3">
-                    <div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <Check className="h-3 w-3 text-green-600" />
-                    </div>
-                    <span className="text-gray-700">{feature}</span>
-                  </li>
+
+              <ul className="space-y-3 mb-8">
+                {pkg.features.map((feature, i) => (
+                  <motion.li
+                    key={feature}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={inView ? { opacity: 1, x: 0 } : {}}
+                    transition={{ delay: index * 0.1 + i * 0.05 }}
+                    className={`flex items-start gap-2 ${
+                      pkg.highlighted ? "text-white" : "text-slate-700"
+                    }`}
+                  >
+                    <span
+                      className={`mt-1 ${
+                        pkg.highlighted ? "text-cyan-300" : "text-cyan-600"
+                      }`}
+                    >
+                      ✓
+                    </span>
+                    <span>{feature}</span>
+                  </motion.li>
                 ))}
               </ul>
 
-              <div className="mt-8 pt-6 border-t border-gray-100">
-                <p className="text-center text-sm text-gray-500">
-                  <span className="font-medium text-gray-700">
-                    Typical delivery:
-                  </span>{" "}
-                  1-2 weeks
-                </p>
-              </div>
-
-              <div className="mt-6">
-                <a
-                  href={CALENDLY_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block"
-                >
-                  <button className="btn-primary w-full">
-                    Book Free Consultation
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </button>
-                </a>
-              </div>
-            </div>
-          </div>
-        </motion.div>
+              <motion.a
+                href={CALENDLY_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className={`w-full py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2 ${
+                  pkg.highlighted
+                    ? "bg-white text-blue-600 hover:bg-cyan-50"
+                    : "bg-blue-600 text-white hover:bg-blue-700"
+                }`}
+              >
+                Get Started
+                <ArrowRight className="w-4 h-4" />
+              </motion.a>
+            </motion.div>
+          ))}
+        </div>
 
         <motion.p
-          className="mt-8 text-center text-sm text-gray-500"
           initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ delay: 0.5 }}
+          className="text-center mt-12 text-slate-600"
         >
-          Fixed-price quotes provided after discovery call. No hidden fees.
+          All packages include: Source code ownership • 30-day support • Full
+          documentation
         </motion.p>
       </div>
     </section>
