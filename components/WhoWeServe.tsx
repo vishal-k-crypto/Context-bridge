@@ -10,7 +10,7 @@ const audiences = [
     title: "SaaS Startups",
     description:
       "You've raised funding, built your product, and now need AI to work seamlessly with your data.",
-    gradient: "from-purple-500/20 to-blue-500/20",
+    gradient: "from-rose-500/20 to-orange-500/20",
     borderColor: "border-purple-500/30",
   },
   {
@@ -18,8 +18,8 @@ const audiences = [
     title: "Growing Agencies",
     description:
       "Your team uses multiple tools and wants AI-powered efficiency without switching platforms.",
-    gradient: "from-cyan-500/20 to-green-500/20",
-    borderColor: "border-cyan-500/30",
+    gradient: "from-orange-500/20 to-amber-500/20",
+    borderColor: "border-orange-500/30",
   },
   {
     icon: Building2,

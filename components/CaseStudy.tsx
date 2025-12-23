@@ -16,7 +16,7 @@ const caseStudies = [
     ],
     tech: ["Python", "MCP", "REST API", "OAuth"],
     category: "MCP Server",
-    gradient: "from-purple-500/20 to-blue-500/20",
+    gradient: "from-rose-500/20 to-orange-500/20",
     borderColor: "border-purple-500/50",
     accentColor: "text-purple-400",
   },
@@ -31,9 +31,9 @@ const caseStudies = [
     ],
     tech: ["Next.js", "APIs", "PostgreSQL", "Cron Jobs"],
     category: "Full-Stack + API",
-    gradient: "from-cyan-500/20 to-green-500/20",
-    borderColor: "border-cyan-500/50",
-    accentColor: "text-cyan-400",
+    gradient: "from-orange-500/20 to-amber-500/20",
+    borderColor: "border-orange-500/50",
+    accentColor: "text-orange-400",
   },
 ];
 

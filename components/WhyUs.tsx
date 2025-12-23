@@ -12,7 +12,7 @@ const advantages = [
       "Most contractors specialize in ONE thing. You need APIs, web dev, AND automation? That's 3+ contractors. With us: one person handles it all.",
     stat: "3x faster",
     statLabel: "delivery",
-    color: "cyan",
+    color: "rose",
   },
   {
     icon: Unlock,

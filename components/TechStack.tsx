@@ -37,9 +37,9 @@ const techCategories = [
       </svg>
     ),
     tools: ["React", "Next.js", "Vue", "Tailwind CSS"],
-    gradient: "from-cyan-600 via-sky-600 to-blue-600",
-    glowColor: "cyan",
-    bgGlow: "bg-cyan-500",
+    gradient: "from-rose-600 via-red-600 to-orange-600",
+    glowColor: "rose",
+    bgGlow: "bg-rose-500",
   },
   {
     category: "Databases",
@@ -73,7 +73,7 @@ const techCategories = [
       </svg>
     ),
     tools: ["Salesforce", "HubSpot", "Jira", "Shopify", "Zapier"],
-    gradient: "from-indigo-600 via-blue-600 to-violet-600",
+    gradient: "from-rose-600 via-pink-600 to-red-600",
     glowColor: "indigo",
     bgGlow: "bg-indigo-500",
   },
