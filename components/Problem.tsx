@@ -95,7 +95,7 @@ export default function Problem() {
           >
             <p className="text-xl sm:text-2xl font-semibold">
               <span className="text-gray-400">You need </span>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-orange-400">
                 one partner who can handle everything.
               </span>
             </p>
@@ -106,7 +106,7 @@ export default function Problem() {
             initial={{ scaleX: 0 }}
             animate={inView ? { scaleX: 1 } : {}}
             transition={{ delay: 1, duration: 0.8 }}
-            className="mt-12 h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent"
+            className="mt-12 h-px bg-gradient-to-r from-transparent via-rose-400 to-transparent"
           />
         </motion.div>
       </div>

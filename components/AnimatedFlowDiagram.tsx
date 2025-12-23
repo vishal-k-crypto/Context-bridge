@@ -20,7 +20,7 @@ export default function AnimatedFlowDiagram() {
             delay: i * 0.5,
             ease: "easeInOut",
           }}
-          className="absolute w-2 h-2 bg-cyan-400 rounded-full blur-sm"
+          className="absolute w-2 h-2 bg-rose-400 rounded-full blur-sm"
           style={{
             left: `${15 + i * 14}%`,
             top: `${40 + Math.sin(i) * 20}%`,
@@ -51,7 +51,7 @@ export default function AnimatedFlowDiagram() {
         <motion.div
           animate={{ x: [0, 8, 0] }}
           transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-          className="text-3xl sm:text-4xl text-cyan-400"
+          className="text-3xl sm:text-4xl text-rose-400"
         >
           →
         </motion.div>
@@ -62,7 +62,7 @@ export default function AnimatedFlowDiagram() {
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ delay: 0.8 }}
-        className="sm:hidden text-2xl text-cyan-400"
+        className="sm:hidden text-2xl text-rose-400"
       >
         ↓
       </motion.div>
@@ -73,17 +73,17 @@ export default function AnimatedFlowDiagram() {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 1, duration: 0.5, type: "spring" }}
         whileHover={{ scale: 1.08 }}
-        className="relative p-4 sm:p-6 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl border-2 border-cyan-300 min-w-[140px] sm:min-w-[160px] text-center shadow-2xl glow-cyan"
+        className="relative p-4 sm:p-6 bg-gradient-to-br from-rose-500 to-orange-600 rounded-xl border-2 border-rose-300 min-w-[140px] sm:min-w-[160px] text-center shadow-2xl glow-rose"
       >
         {/* Glow ring */}
         <motion.div
           animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.8, 0.5] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="absolute inset-0 rounded-xl bg-cyan-400/20 blur-xl -z-10"
+          className="absolute inset-0 rounded-xl bg-rose-400/20 blur-xl -z-10"
         />
         <div className="text-2xl sm:text-3xl mb-2">🌉</div>
         <div className="font-bold text-sm sm:text-base">Context Bridge</div>
-        <div className="text-xs sm:text-sm text-cyan-100">APIs + MCP + Web</div>
+        <div className="text-xs sm:text-sm text-rose-100">APIs + MCP + Web</div>
       </motion.div>
 
       {/* Animated Arrow 2 */}
@@ -96,7 +96,7 @@ export default function AnimatedFlowDiagram() {
         <motion.div
           animate={{ x: [0, 8, 0] }}
           transition={{ duration: 1.5, repeat: Infinity, delay: 0.3, ease: "easeInOut" }}
-          className="text-3xl sm:text-4xl text-cyan-400"
+          className="text-3xl sm:text-4xl text-rose-400"
         >
           →
         </motion.div>
@@ -107,7 +107,7 @@ export default function AnimatedFlowDiagram() {
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ delay: 1.3 }}
-        className="sm:hidden text-2xl text-cyan-400"
+        className="sm:hidden text-2xl text-rose-400"
       >
         ↓
       </motion.div>

@@ -51,7 +51,7 @@ export default function WhoWeServe() {
     <section className="py-24 bg-gradient-to-b from-slate-900 to-slate-800 relative overflow-hidden" ref={ref}>
       {/* Background effects */}
       <div className="absolute inset-0">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-rose-500/5 rounded-full blur-3xl" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -65,7 +65,7 @@ export default function WhoWeServe() {
             initial={{ scale: 0 }}
             animate={inView ? { scale: 1 } : {}}
             transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-            className="inline-block px-4 py-2 bg-cyan-500/20 border border-cyan-500/50 rounded-full text-cyan-400 text-sm font-medium backdrop-blur-sm mb-6"
+            className="inline-block px-4 py-2 bg-rose-500/20 border border-rose-500/50 rounded-full text-rose-400 text-sm font-medium backdrop-blur-sm mb-6"
           >
             Our Clients
           </motion.span>
@@ -87,7 +87,7 @@ export default function WhoWeServe() {
               className={`group p-8 bg-gradient-to-br ${audience.gradient} backdrop-blur-sm rounded-2xl border ${audience.borderColor} hover:scale-[1.02] transition-transform duration-300`}
             >
               <div className="w-14 h-14 bg-white/10 backdrop-blur-sm rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                <audience.icon className="h-7 w-7 text-cyan-400" />
+                <audience.icon className="h-7 w-7 text-rose-400" />
               </div>
               <h3 className="text-xl font-bold text-white mb-4">
                 {audience.title}

@@ -57,8 +57,8 @@ export default function CaseStudy() {
     <section className="py-24 bg-gradient-to-b from-slate-800 to-slate-900 relative overflow-hidden" ref={ref}>
       {/* Background effects */}
       <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-0 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-0 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl" />
+        <div className="absolute top-1/4 left-0 w-72 h-72 bg-rose-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-0 w-72 h-72 bg-orange-500/10 rounded-full blur-3xl" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -72,7 +72,7 @@ export default function CaseStudy() {
             initial={{ scale: 0 }}
             animate={inView ? { scale: 1 } : {}}
             transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-            className="inline-block px-4 py-2 bg-cyan-500/20 border border-cyan-500/50 rounded-full text-cyan-400 text-sm font-medium backdrop-blur-sm mb-6"
+            className="inline-block px-4 py-2 bg-rose-500/20 border border-rose-500/50 rounded-full text-rose-400 text-sm font-medium backdrop-blur-sm mb-6"
           >
             Case Studies
           </motion.span>

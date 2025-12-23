@@ -19,10 +19,10 @@ export default function FinalCTA() {
         className="absolute inset-0"
         animate={{
           background: [
-            "linear-gradient(135deg, #0891b2 0%, #1d4ed8 50%, #7c3aed 100%)",
-            "linear-gradient(135deg, #1d4ed8 0%, #7c3aed 50%, #0891b2 100%)",
-            "linear-gradient(135deg, #7c3aed 0%, #0891b2 50%, #1d4ed8 100%)",
-            "linear-gradient(135deg, #0891b2 0%, #1d4ed8 50%, #7c3aed 100%)",
+            "linear-gradient(135deg, #e11d48 0%, #f97316 50%, #dc2626 100%)",
+            "linear-gradient(135deg, #f97316 0%, #dc2626 50%, #e11d48 100%)",
+            "linear-gradient(135deg, #dc2626 0%, #e11d48 50%, #f97316 100%)",
+            "linear-gradient(135deg, #e11d48 0%, #f97316 50%, #dc2626 100%)",
           ],
         }}
         transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
@@ -106,7 +106,7 @@ export default function FinalCTA() {
               rel="noopener noreferrer"
               whileHover={{ scale: 1.02, y: -2 }}
               whileTap={{ scale: 0.98 }}
-              className="inline-flex items-center justify-center gap-3 px-10 py-5 bg-white text-blue-600 rounded-xl font-bold text-lg shadow-2xl shadow-black/20 hover:shadow-black/30 transition-shadow duration-300"
+              className="inline-flex items-center justify-center gap-3 px-10 py-5 bg-white text-rose-600 rounded-xl font-bold text-lg shadow-2xl shadow-black/20 hover:shadow-black/30 transition-shadow duration-300"
             >
               <Calendar className="w-6 h-6" />
               Book Discovery Call

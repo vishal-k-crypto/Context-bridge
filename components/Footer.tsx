@@ -9,7 +9,7 @@ export default function Footer() {
   return (
     <footer className="bg-slate-950 text-gray-400 relative overflow-hidden">
       {/* Subtle top gradient */}
-      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent" />
+      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-rose-500/50 to-transparent" />
 
       <div className="container mx-auto px-4 py-16">
         <div className="grid md:grid-cols-4 gap-12">
@@ -22,7 +22,7 @@ export default function Footer() {
             className="md:col-span-2"
           >
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center">
+              <div className="w-10 h-10 bg-gradient-to-br from-rose-500 to-orange-600 rounded-xl flex items-center justify-center">
                 <span className="text-white font-bold text-lg">CB</span>
               </div>
               <span className="text-white font-bold text-xl">Context Bridge</span>
@@ -35,7 +35,7 @@ export default function Footer() {
             <div className="flex gap-4 mt-6">
               <a
                 href="mailto:vishal@contextbridge.systems"
-                className="w-10 h-10 bg-white/5 border border-white/10 rounded-lg flex items-center justify-center hover:bg-cyan-500/20 hover:border-cyan-500/50 transition-all duration-300"
+                className="w-10 h-10 bg-white/5 border border-white/10 rounded-lg flex items-center justify-center hover:bg-rose-500/20 hover:border-rose-500/50 transition-all duration-300"
               >
                 <Mail className="h-4 w-4" />
               </a>
@@ -43,7 +43,7 @@ export default function Footer() {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 bg-white/5 border border-white/10 rounded-lg flex items-center justify-center hover:bg-cyan-500/20 hover:border-cyan-500/50 transition-all duration-300"
+                className="w-10 h-10 bg-white/5 border border-white/10 rounded-lg flex items-center justify-center hover:bg-rose-500/20 hover:border-rose-500/50 transition-all duration-300"
               >
                 <Linkedin className="h-4 w-4" />
               </a>
@@ -62,7 +62,7 @@ export default function Footer() {
               <li>
                 <a
                   href="#services"
-                  className="hover:text-cyan-400 transition-colors duration-200 flex items-center gap-1 group"
+                  className="hover:text-rose-400 transition-colors duration-200 flex items-center gap-1 group"
                 >
                   Services
                   <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -73,7 +73,7 @@ export default function Footer() {
                   href={CALENDLY_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-cyan-400 transition-colors duration-200 flex items-center gap-1 group"
+                  className="hover:text-rose-400 transition-colors duration-200 flex items-center gap-1 group"
                 >
                   Book a Call
                   <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -94,7 +94,7 @@ export default function Footer() {
               <li>
                 <a
                   href="mailto:vishal@contextbridge.systems"
-                  className="hover:text-cyan-400 transition-colors duration-200"
+                  className="hover:text-rose-400 transition-colors duration-200"
                 >
                   vishal@contextbridge.systems
                 </a>
