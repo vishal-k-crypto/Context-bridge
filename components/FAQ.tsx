@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, MessageCircle } from "lucide-react";
 
 const faqs = [
   {
@@ -48,36 +48,27 @@ function FAQItem({
   answer,
   isOpen,
   onClick,
-  index,
-  inView,
 }: {
   question: string;
   answer: string;
   isOpen: boolean;
   onClick: () => void;
-  index: number;
-  inView: boolean;
 }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ delay: index * 0.1, duration: 0.5 }}
-      className="border-b border-slate-200 last:border-0"
-    >
+    <div className="border-b border-white/10 last:border-0">
       <button
         onClick={onClick}
         className="w-full py-6 flex items-center justify-between text-left focus:outline-none group"
       >
-        <span className="text-lg font-medium text-slate-900 group-hover:text-cyan-600 transition-colors">
+        <span className="text-lg font-medium text-white group-hover:text-cyan-400 transition-colors duration-200">
           {question}
         </span>
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.2 }}
           className="flex-shrink-0 ml-4"
         >
-          <ChevronDown className="h-5 w-5 text-slate-500" />
+          <ChevronDown className={`h-5 w-5 transition-colors duration-200 ${isOpen ? 'text-cyan-400' : 'text-gray-500'}`} />
         </motion.div>
       </button>
       <AnimatePresence>
@@ -86,14 +77,14 @@ function FAQItem({
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.2 }}
             className="overflow-hidden"
           >
-            <p className="pb-6 text-slate-600 leading-relaxed">{answer}</p>
+            <p className="pb-6 text-gray-400 leading-relaxed">{answer}</p>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.div>
+    </div>
   );
 }
 
@@ -102,18 +93,33 @@ export default function FAQ() {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
 
   return (
-    <section className="py-24 bg-slate-50" ref={ref}>
-      <div className="container mx-auto px-4">
+    <section className="py-24 bg-gradient-to-b from-slate-900 to-slate-800 relative overflow-hidden" ref={ref}>
+      {/* Background effects */}
+      <div className="absolute inset-0">
+        <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl" />
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
+          <motion.span
+            initial={{ scale: 0 }}
+            animate={inView ? { scale: 1 } : {}}
+            transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+            className="inline-block px-4 py-2 bg-cyan-500/20 border border-cyan-500/50 rounded-full text-cyan-400 text-sm font-medium backdrop-blur-sm mb-6"
+          >
+            <MessageCircle className="w-4 h-4 inline mr-2" />
+            FAQ
+          </motion.span>
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
             Frequently Asked Questions
           </h2>
-          <p className="text-xl text-slate-600">
+          <p className="text-xl text-gray-400">
             Everything you need to know
           </p>
         </motion.div>
@@ -122,7 +128,7 @@ export default function FAQ() {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="max-w-3xl mx-auto bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden"
+          className="max-w-3xl mx-auto bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden"
         >
           <div className="px-6 sm:px-8">
             {faqs.map((faq, index) => (
@@ -132,8 +138,6 @@ export default function FAQ() {
                 answer={faq.answer}
                 isOpen={openIndex === index}
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                index={index}
-                inView={inView}
               />
             ))}
           </div>

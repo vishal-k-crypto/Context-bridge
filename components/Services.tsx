@@ -42,12 +42,31 @@ const services = [
   },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+};
+
 export default function Services() {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
 
   return (
-    <section id="services" className="py-24 bg-slate-50" ref={ref}>
-      <div className="container mx-auto px-4">
+    <section id="services" className="py-24 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden" ref={ref}>
+      {/* Background effects matching hero */}
+      <div className="absolute inset-0">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -55,102 +74,87 @@ export default function Services() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
+          <motion.span
+            initial={{ scale: 0 }}
+            animate={inView ? { scale: 1 } : {}}
+            transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+            className="inline-block px-4 py-2 bg-cyan-500/20 border border-cyan-500/50 rounded-full text-cyan-400 text-sm font-medium backdrop-blur-sm mb-6"
+          >
+            Our Services
+          </motion.span>
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
             What We Build
           </h2>
-          <p className="text-xl text-slate-600 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-400 max-w-2xl mx-auto">
             From AI integrations to complete automation systems—all from one partner
           </p>
         </motion.div>
 
         {/* Services Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {services.map((service, index) => (
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto"
+        >
+          {services.map((service) => (
             <motion.div
               key={service.title}
-              initial={{ opacity: 0, y: 30 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: index * 0.1, duration: 0.5 }}
-              whileHover={{ y: -10, boxShadow: "0 20px 40px rgba(0,0,0,0.1)" }}
-              className={`p-8 rounded-2xl transition-all duration-300 ${
+              variants={itemVariants}
+              className={`group relative p-8 rounded-2xl backdrop-blur-sm border transition-all duration-300 cursor-default ${
                 service.highlight
-                  ? "bg-gradient-to-br from-blue-500 to-cyan-500 text-white lg:col-span-2"
-                  : "bg-white"
+                  ? "bg-gradient-to-br from-cyan-500/20 to-blue-600/20 border-cyan-500/50 lg:col-span-2"
+                  : "bg-white/5 border-white/10 hover:border-cyan-500/50 hover:bg-white/10"
               }`}
             >
-              {/* Icon */}
-              <motion.div
-                whileHover={{ scale: 1.2, rotate: 360 }}
-                transition={{ duration: 0.5 }}
-                className={`w-14 h-14 rounded-xl flex items-center justify-center mb-4 ${
-                  service.highlight ? "bg-white/20" : "bg-cyan-100"
-                }`}
-              >
-                <service.icon
-                  className={`w-7 h-7 ${
-                    service.highlight ? "text-white" : "text-cyan-600"
-                  }`}
-                />
-              </motion.div>
+              {/* Glow effect on hover */}
+              <div className={`absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
+                service.highlight ? "bg-cyan-500/5" : "bg-gradient-to-br from-cyan-500/10 to-blue-500/10"
+              }`} />
 
-              {/* Title */}
-              <h3
-                className={`text-2xl font-bold mb-3 ${
-                  service.highlight ? "text-white" : "text-slate-900"
-                }`}
-              >
-                {service.title}
-              </h3>
+              <div className="relative z-10">
+                {/* Icon */}
+                <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110 ${
+                  service.highlight ? "bg-cyan-500/30" : "bg-cyan-500/20"
+                }`}>
+                  <service.icon className="w-7 h-7 text-cyan-400" />
+                </div>
 
-              {/* Description */}
-              <p
-                className={`mb-4 ${
-                  service.highlight ? "text-cyan-50" : "text-slate-600"
-                }`}
-              >
-                {service.description}
-              </p>
+                {/* Title */}
+                <h3 className="text-2xl font-bold mb-3 text-white">
+                  {service.title}
+                </h3>
 
-              {/* Features */}
-              <ul className="space-y-2">
-                {service.features.map((feature, i) => (
-                  <motion.li
-                    key={feature}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={inView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ delay: index * 0.1 + i * 0.1 }}
-                    className={`flex items-center gap-2 ${
-                      service.highlight ? "text-cyan-50" : "text-slate-700"
-                    }`}
-                  >
-                    <span
-                      className={
-                        service.highlight ? "text-cyan-200" : "text-cyan-500"
-                      }
+                {/* Description */}
+                <p className="mb-4 text-gray-400">
+                  {service.description}
+                </p>
+
+                {/* Features */}
+                <ul className="space-y-2">
+                  {service.features.map((feature) => (
+                    <li
+                      key={feature}
+                      className="flex items-center gap-2 text-gray-300"
                     >
-                      ✓
-                    </span>
-                    {feature}
-                  </motion.li>
-                ))}
-              </ul>
+                      <span className="text-cyan-400">✓</span>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
 
-              {/* Badge for featured service */}
-              {service.highlight && (
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={inView ? { scale: 1 } : {}}
-                  transition={{ delay: 0.5, type: "spring" }}
-                  className="mt-6"
-                >
-                  <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-sm font-medium">
-                    Featured Service
-                  </span>
-                </motion.div>
-              )}
+                {/* Badge for featured service */}
+                {service.highlight && (
+                  <div className="mt-6">
+                    <span className="px-3 py-1 bg-cyan-500/30 backdrop-blur-sm rounded-full text-sm font-medium text-cyan-300">
+                      ⭐ Featured Service
+                    </span>
+                  </div>
+                )}
+              </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

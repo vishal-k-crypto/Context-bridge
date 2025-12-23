@@ -1,86 +1,112 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 import { Search, Zap, Rocket } from "lucide-react";
 
 const steps = [
   {
     icon: Search,
     title: "Discover",
-    emoji: "",
     description:
       "We analyze your tools, APIs, and workflows to understand exactly what Claude needs to access.",
   },
   {
     icon: Zap,
     title: "Build",
-    emoji: "",
     description:
       "Custom MCP server developed in 1-2 weeks using Python, with full authentication and error handling.",
   },
   {
     icon: Rocket,
     title: "Deploy",
-    emoji: "",
     description:
       "Seamless integration with your existing systems. Full documentation and handoff. No vendor lock-in.",
   },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.15 }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+};
+
 export default function Solution() {
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
+
   return (
-    <section id="solution" className="section-padding bg-white">
-      <div className="container-max">
+    <section id="solution" className="py-24 bg-gradient-to-b from-slate-900 to-slate-800 relative overflow-hidden" ref={ref}>
+      {/* Background effects */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/2 left-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
         <motion.div
-          className="text-center max-w-3xl mx-auto"
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
+          <motion.span
+            initial={{ scale: 0 }}
+            animate={inView ? { scale: 1 } : {}}
+            transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+            className="inline-block px-4 py-2 bg-cyan-500/20 border border-cyan-500/50 rounded-full text-cyan-400 text-sm font-medium backdrop-blur-sm mb-6"
+          >
+            Our Process
+          </motion.span>
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
             We Build Custom MCP Servers
           </h2>
-          <p className="mt-4 text-lg text-gray-600">
+          <p className="text-xl text-gray-400 max-w-2xl mx-auto">
             Model Context Protocol (MCP) is Anthropic&apos;s open standard for
             connecting AI to external tools.
           </p>
         </motion.div>
 
-        <div className="mt-16 grid md:grid-cols-3 gap-8">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto relative"
+        >
+          {/* Connection line */}
+          <div className="hidden md:block absolute top-24 left-1/6 right-1/6 h-0.5 bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent" />
+
           {steps.map((step, index) => (
             <motion.div
               key={step.title}
-              className="relative p-8 bg-gray-50 rounded-2xl border border-gray-100 hover:border-primary-200 hover:shadow-lg transition-all duration-300"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              variants={itemVariants}
+              className="group relative p-8 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-cyan-500/50 hover:bg-white/10 transition-all duration-300"
             >
               {/* Step number */}
-              <div className="absolute -top-4 -left-4 w-10 h-10 bg-primary-800 text-white rounded-full flex items-center justify-center font-bold text-lg">
+              <div className="absolute -top-4 -left-4 w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 text-white rounded-full flex items-center justify-center font-bold text-lg shadow-lg shadow-cyan-500/25">
                 {index + 1}
               </div>
 
               <div className="flex flex-col items-center text-center">
-                <div className="w-16 h-16 bg-primary-100 rounded-xl flex items-center justify-center">
-                  <step.icon className="h-8 w-8 text-primary-800" />
+                <div className="w-16 h-16 bg-cyan-500/20 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <step.icon className="h-8 w-8 text-cyan-400" />
                 </div>
-                <h3 className="mt-6 text-xl font-bold text-gray-900">
+                <h3 className="text-xl font-bold text-white mb-4">
                   {step.title}
                 </h3>
-                <p className="mt-4 text-gray-600 leading-relaxed">
+                <p className="text-gray-400 leading-relaxed">
                   {step.description}
                 </p>
               </div>
             </motion.div>
           ))}
-        </div>
-
-        {/* Connection line on desktop */}
-        <div className="hidden md:block relative mt-[-180px] mb-[100px]">
-          <div className="absolute top-1/2 left-1/4 right-1/4 h-0.5 bg-gradient-to-r from-primary-200 via-accent-300 to-primary-200" />
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 import { Network, Code2, Shield, FileText } from "lucide-react";
 
 const features = [
@@ -31,53 +32,82 @@ async def get_user_data(user_id: str) -> dict:
     """Fetch user profile from CRM"""
     return await crm_client.get_user(user_id)`;
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.4 } }
+};
+
 export default function HowItWorks() {
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
+
   return (
-    <section className="section-padding bg-white">
-      <div className="container-max">
+    <section className="py-24 bg-gradient-to-b from-slate-800 to-slate-900 relative overflow-hidden" ref={ref}>
+      {/* Background effects */}
+      <div className="absolute inset-0">
+        <div className="absolute top-0 right-1/4 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-1/4 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl" />
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
         <motion.div
-          className="text-center max-w-3xl mx-auto"
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
+          <motion.span
+            initial={{ scale: 0 }}
+            animate={inView ? { scale: 1 } : {}}
+            transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+            className="inline-block px-4 py-2 bg-cyan-500/20 border border-cyan-500/50 rounded-full text-cyan-400 text-sm font-medium backdrop-blur-sm mb-6"
+          >
+            Technology
+          </motion.span>
+          <h2 className="text-4xl md:text-5xl font-bold text-white">
             Built on Industry Standards
           </h2>
         </motion.div>
 
-        <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {features.map((feature, index) => (
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16"
+        >
+          {features.map((feature) => (
             <motion.div
               key={feature.title}
-              className="p-6 bg-gray-50 rounded-xl border border-gray-100 hover:border-primary-200 transition-colors duration-200"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              variants={itemVariants}
+              className="group p-6 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 hover:border-cyan-500/50 hover:bg-white/10 transition-all duration-300"
             >
-              <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center">
-                <feature.icon className="h-6 w-6 text-primary-800" />
+              <div className="w-12 h-12 bg-cyan-500/20 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                <feature.icon className="h-6 w-6 text-cyan-400" />
               </div>
-              <h3 className="mt-4 text-lg font-semibold text-gray-900">
+              <h3 className="text-lg font-semibold text-white mb-2">
                 {feature.title}
               </h3>
-              <p className="mt-2 text-sm text-gray-600">{feature.description}</p>
+              <p className="text-sm text-gray-400">{feature.description}</p>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Code snippet */}
         <motion.div
-          className="mt-12 max-w-2xl mx-auto"
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, delay: 0.4 }}
+          className="max-w-2xl mx-auto"
         >
-          <div className="bg-gray-900 rounded-xl overflow-hidden shadow-2xl">
-            <div className="flex items-center gap-2 px-4 py-3 bg-gray-800">
+          <div className="bg-slate-950 rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+            <div className="flex items-center gap-2 px-4 py-3 bg-slate-900 border-b border-white/10">
               <div className="w-3 h-3 rounded-full bg-red-500" />
               <div className="w-3 h-3 rounded-full bg-yellow-500" />
               <div className="w-3 h-3 rounded-full bg-green-500" />
