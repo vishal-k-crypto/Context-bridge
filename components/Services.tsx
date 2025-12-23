@@ -62,8 +62,8 @@ export default function Services() {
     <section id="services" className="py-24 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden" ref={ref}>
       {/* Background effects matching hero */}
       <div className="absolute inset-0">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-rose-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -78,7 +78,7 @@ export default function Services() {
             initial={{ scale: 0 }}
             animate={inView ? { scale: 1 } : {}}
             transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-            className="inline-block px-4 py-2 bg-rose-500/20 border border-rose-500/50 rounded-full text-rose-400 text-sm font-medium backdrop-blur-sm mb-6"
+            className="inline-block px-4 py-2 bg-cyan-500/20 border border-cyan-500/50 rounded-full text-cyan-400 text-sm font-medium backdrop-blur-sm mb-6"
           >
             Our Services
           </motion.span>
@@ -103,21 +103,21 @@ export default function Services() {
               variants={itemVariants}
               className={`group relative p-8 rounded-2xl backdrop-blur-sm border transition-all duration-300 cursor-default ${
                 service.highlight
-                  ? "bg-gradient-to-br from-rose-500/20 to-orange-600/20 border-rose-500/50 lg:col-span-2"
-                  : "bg-white/5 border-white/10 hover:border-rose-500/50 hover:bg-white/10"
+                  ? "bg-gradient-to-br from-cyan-500/20 to-blue-600/20 border-cyan-500/50 lg:col-span-2"
+                  : "bg-white/5 border-white/10 hover:border-cyan-500/50 hover:bg-white/10"
               }`}
             >
               {/* Glow effect on hover */}
               <div className={`absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
-                service.highlight ? "bg-rose-500/5" : "bg-gradient-to-br from-rose-500/10 to-orange-500/10"
+                service.highlight ? "bg-cyan-500/5" : "bg-gradient-to-br from-cyan-500/10 to-blue-500/10"
               }`} />
 
               <div className="relative z-10">
                 {/* Icon */}
                 <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110 ${
-                  service.highlight ? "bg-rose-500/30" : "bg-rose-500/20"
+                  service.highlight ? "bg-cyan-500/30" : "bg-cyan-500/20"
                 }`}>
-                  <service.icon className="w-7 h-7 text-rose-400" />
+                  <service.icon className="w-7 h-7 text-cyan-400" />
                 </div>
 
                 {/* Title */}
@@ -137,7 +137,7 @@ export default function Services() {
                       key={feature}
                       className="flex items-center gap-2 text-gray-300"
                     >
-                      <span className="text-rose-400">✓</span>
+                      <span className="text-cyan-400">✓</span>
                       {feature}
                     </li>
                   ))}
@@ -146,7 +146,7 @@ export default function Services() {
                 {/* Badge for featured service */}
                 {service.highlight && (
                   <div className="mt-6">
-                    <span className="px-3 py-1 bg-rose-500/30 backdrop-blur-sm rounded-full text-sm font-medium text-rose-300">
+                    <span className="px-3 py-1 bg-cyan-500/30 backdrop-blur-sm rounded-full text-sm font-medium text-cyan-300">
                       ⭐ Featured Service
                     </span>
                   </div>

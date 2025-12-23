@@ -45,8 +45,8 @@ export default function Solution() {
     <section id="solution" className="py-24 bg-gradient-to-b from-slate-900 to-slate-800 relative overflow-hidden" ref={ref}>
       {/* Background effects */}
       <div className="absolute inset-0">
-        <div className="absolute top-1/2 left-0 w-96 h-96 bg-rose-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -60,7 +60,7 @@ export default function Solution() {
             initial={{ scale: 0 }}
             animate={inView ? { scale: 1 } : {}}
             transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-            className="inline-block px-4 py-2 bg-rose-500/20 border border-rose-500/50 rounded-full text-rose-400 text-sm font-medium backdrop-blur-sm mb-6"
+            className="inline-block px-4 py-2 bg-cyan-500/20 border border-cyan-500/50 rounded-full text-cyan-400 text-sm font-medium backdrop-blur-sm mb-6"
           >
             Our Process
           </motion.span>
@@ -80,22 +80,22 @@ export default function Solution() {
           className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto relative"
         >
           {/* Connection line */}
-          <div className="hidden md:block absolute top-24 left-1/6 right-1/6 h-0.5 bg-gradient-to-r from-transparent via-rose-500/50 to-transparent" />
+          <div className="hidden md:block absolute top-24 left-1/6 right-1/6 h-0.5 bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent" />
 
           {steps.map((step, index) => (
             <motion.div
               key={step.title}
               variants={itemVariants}
-              className="group relative p-8 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-rose-500/50 hover:bg-white/10 transition-all duration-300"
+              className="group relative p-8 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-cyan-500/50 hover:bg-white/10 transition-all duration-300"
             >
               {/* Step number */}
-              <div className="absolute -top-4 -left-4 w-10 h-10 bg-gradient-to-br from-rose-500 to-orange-600 text-white rounded-full flex items-center justify-center font-bold text-lg shadow-lg shadow-rose-500/25">
+              <div className="absolute -top-4 -left-4 w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 text-white rounded-full flex items-center justify-center font-bold text-lg shadow-lg shadow-cyan-500/25">
                 {index + 1}
               </div>
 
               <div className="flex flex-col items-center text-center">
-                <div className="w-16 h-16 bg-rose-500/20 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <step.icon className="h-8 w-8 text-rose-400" />
+                <div className="w-16 h-16 bg-cyan-500/20 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <step.icon className="h-8 w-8 text-cyan-400" />
                 </div>
                 <h3 className="text-xl font-bold text-white mb-4">
                   {step.title}

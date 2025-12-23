@@ -67,7 +67,7 @@ export default function Pricing() {
     <section className="py-24 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden" ref={ref}>
       {/* Background effects */}
       <div className="absolute inset-0">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-rose-500/10 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-3xl" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -81,7 +81,7 @@ export default function Pricing() {
             initial={{ scale: 0 }}
             animate={inView ? { scale: 1 } : {}}
             transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-            className="inline-block px-4 py-2 bg-rose-500/20 border border-rose-500/50 rounded-full text-rose-400 text-sm font-medium backdrop-blur-sm mb-6"
+            className="inline-block px-4 py-2 bg-cyan-500/20 border border-cyan-500/50 rounded-full text-cyan-400 text-sm font-medium backdrop-blur-sm mb-6"
           >
             Pricing
           </motion.span>
@@ -105,13 +105,13 @@ export default function Pricing() {
               variants={itemVariants}
               className={`group relative p-8 rounded-2xl backdrop-blur-sm transition-all duration-300 ${
                 pkg.highlighted
-                  ? "bg-gradient-to-br from-rose-500/30 to-orange-600/30 border-2 border-rose-400 scale-105"
-                  : "bg-white/5 border border-white/10 hover:border-rose-500/50 hover:bg-white/10"
+                  ? "bg-gradient-to-br from-cyan-500/30 to-blue-600/30 border-2 border-cyan-400 scale-105"
+                  : "bg-white/5 border border-white/10 hover:border-cyan-500/50 hover:bg-white/10"
               }`}
             >
               {pkg.highlighted && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                  <span className="px-4 py-1 bg-gradient-to-r from-rose-500 to-orange-500 rounded-full text-xs font-bold text-white flex items-center gap-1">
+                  <span className="px-4 py-1 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full text-xs font-bold text-white flex items-center gap-1">
                     <Sparkles className="w-3 h-3" />
                     MOST POPULAR
                   </span>
@@ -122,7 +122,7 @@ export default function Pricing() {
                 {pkg.name}
               </h3>
 
-              <div className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-orange-400 mb-2">
+              <div className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400 mb-2">
                 {pkg.price}
               </div>
 
@@ -136,7 +136,7 @@ export default function Pricing() {
                     key={feature}
                     className="flex items-start gap-3 text-gray-300"
                   >
-                    <Check className="w-5 h-5 text-rose-400 flex-shrink-0 mt-0.5" />
+                    <Check className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
                     <span>{feature}</span>
                   </li>
                 ))}
@@ -150,7 +150,7 @@ export default function Pricing() {
                 whileTap={{ scale: 0.98 }}
                 className={`w-full py-3 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all duration-300 ${
                   pkg.highlighted
-                    ? "bg-gradient-to-r from-rose-500 to-orange-500 text-white shadow-lg shadow-rose-500/25 hover:shadow-rose-500/40"
+                    ? "bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40"
                     : "bg-white/10 text-white border border-white/20 hover:bg-white/20"
                 }`}
               >

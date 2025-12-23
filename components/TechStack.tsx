@@ -37,9 +37,9 @@ const techCategories = [
       </svg>
     ),
     tools: ["React", "Next.js", "Vue", "Tailwind CSS"],
-    gradient: "from-rose-600 via-red-600 to-orange-600",
-    glowColor: "rose",
-    bgGlow: "bg-rose-500",
+    gradient: "from-cyan-600 via-sky-600 to-blue-600",
+    glowColor: "cyan",
+    bgGlow: "bg-cyan-500",
   },
   {
     category: "Databases",
@@ -73,7 +73,7 @@ const techCategories = [
       </svg>
     ),
     tools: ["Salesforce", "HubSpot", "Jira", "Shopify", "Zapier"],
-    gradient: "from-rose-600 via-pink-600 to-red-600",
+    gradient: "from-indigo-600 via-blue-600 to-violet-600",
     glowColor: "indigo",
     bgGlow: "bg-indigo-500",
   },
@@ -125,7 +125,7 @@ export default function TechStack() {
             opacity: [0.3, 0.5, 0.3]
           }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-1/4 -left-32 w-96 h-96 bg-rose-600/20 rounded-full blur-[128px]"
+          className="absolute top-1/4 -left-32 w-96 h-96 bg-purple-600/20 rounded-full blur-[128px]"
         />
         <motion.div 
           animate={{ 
@@ -133,7 +133,7 @@ export default function TechStack() {
             opacity: [0.3, 0.5, 0.3]
           }}
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-1/4 -right-32 w-96 h-96 bg-orange-600/20 rounded-full blur-[128px]"
+          className="absolute bottom-1/4 -right-32 w-96 h-96 bg-cyan-600/20 rounded-full blur-[128px]"
         />
         
         {/* Grid pattern */}
@@ -154,13 +154,13 @@ export default function TechStack() {
             initial={{ scale: 0, rotate: -180 }}
             animate={inView ? { scale: 1, rotate: 0 } : {}}
             transition={{ delay: 0.2, type: "spring", stiffness: 200, damping: 15 }}
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-rose-500/10 to-orange-500/10 border border-rose-500/30 rounded-full backdrop-blur-xl mb-8"
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 border border-cyan-500/30 rounded-full backdrop-blur-xl mb-8"
           >
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
             </span>
-            <span className="text-rose-400 text-sm font-semibold tracking-wide uppercase">Technology Stack</span>
+            <span className="text-cyan-400 text-sm font-semibold tracking-wide uppercase">Technology Stack</span>
           </motion.div>
           
           <motion.h2 
@@ -170,7 +170,7 @@ export default function TechStack() {
             className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6"
           >
             <span className="text-white">Built with </span>
-            <span className="bg-gradient-to-r from-rose-400 via-orange-400 to-amber-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
               Modern Tech
             </span>
           </motion.h2>

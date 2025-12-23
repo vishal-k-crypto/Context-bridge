@@ -12,7 +12,7 @@ const advantages = [
       "Most contractors specialize in ONE thing. You need APIs, web dev, AND automation? That's 3+ contractors. With us: one person handles it all.",
     stat: "3x faster",
     statLabel: "delivery",
-    color: "rose",
+    color: "cyan",
   },
   {
     icon: Unlock,
@@ -66,9 +66,9 @@ export default function WhyUs() {
         className="absolute inset-0 opacity-20"
         animate={{
           background: [
-            "radial-gradient(circle at 20% 80%, #f43f5e 0%, transparent 50%)",
-            "radial-gradient(circle at 80% 20%, #f97316 0%, transparent 50%)",
-            "radial-gradient(circle at 20% 80%, #f43f5e 0%, transparent 50%)",
+            "radial-gradient(circle at 20% 80%, #06b6d4 0%, transparent 50%)",
+            "radial-gradient(circle at 80% 20%, #3b82f6 0%, transparent 50%)",
+            "radial-gradient(circle at 20% 80%, #06b6d4 0%, transparent 50%)",
           ],
         }}
         transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
@@ -85,7 +85,7 @@ export default function WhyUs() {
             initial={{ scale: 0 }}
             animate={inView ? { scale: 1 } : {}}
             transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-            className="inline-block px-4 py-2 bg-rose-500/20 border border-rose-500/50 rounded-full text-rose-400 text-sm font-medium backdrop-blur-sm mb-6"
+            className="inline-block px-4 py-2 bg-cyan-500/20 border border-cyan-500/50 rounded-full text-cyan-400 text-sm font-medium backdrop-blur-sm mb-6"
           >
             Why Choose Us
           </motion.span>
@@ -104,15 +104,15 @@ export default function WhyUs() {
             <motion.div
               key={adv.title}
               variants={itemVariants}
-              className="group relative p-8 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-rose-500/50 hover:bg-white/10 transition-all duration-300 overflow-hidden"
+              className="group relative p-8 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-cyan-500/50 hover:bg-white/10 transition-all duration-300 overflow-hidden"
             >
               {/* Glow effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-rose-500/0 to-orange-500/0 group-hover:from-rose-500/10 group-hover:to-orange-500/10 transition-all duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/0 to-blue-500/0 group-hover:from-cyan-500/10 group-hover:to-blue-500/10 transition-all duration-500" />
 
               <div className="relative z-10">
                 {/* Icon */}
-                <div className="w-14 h-14 bg-rose-500/20 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <adv.icon className="w-7 h-7 text-rose-400" />
+                <div className="w-14 h-14 bg-cyan-500/20 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <adv.icon className="w-7 h-7 text-cyan-400" />
                 </div>
 
                 <h3 className="text-2xl font-bold mb-3">{adv.title}</h3>
@@ -120,7 +120,7 @@ export default function WhyUs() {
 
                 {/* Stat */}
                 <div className="flex items-baseline gap-2 pt-4 border-t border-white/10">
-                  <span className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-orange-400">
+                  <span className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">
                     {adv.stat}
                   </span>
                   <span className="text-gray-500">{adv.statLabel}</span>
