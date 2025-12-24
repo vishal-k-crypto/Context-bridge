@@ -2,46 +2,52 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import MagneticButton from '@/components/ui/MagneticButton'
 
 export default function NotFound() {
     return (
-        <div className="min-h-screen bg-black flex flex-col items-center justify-center text-white relative overflow-hidden">
-
-            {/* Large 404 Background */}
-            <motion.div
-                className="absolute text-[40vw] font-bold text-white/[0.02] pointer-events-none select-none leading-none"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 1 }}
-            >
-                404
-            </motion.div>
+        <div className="min-h-screen bg-black flex flex-col items-center justify-center text-white relative">
+            {/* Background */}
+            <div
+                className="absolute inset-0"
+                style={{
+                    background: 'radial-gradient(circle at center, var(--accent-subtle) 0%, transparent 50%)'
+                }}
+            />
 
             {/* Content */}
             <motion.div
-                className="z-10 text-center"
+                className="relative z-10 text-center"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
             >
-                <h1 className="text-5xl md:text-7xl font-bold mb-6">
-                    Page not found
-                </h1>
+                <div className="text-[20vw] font-light text-white/5 leading-none select-none">
+                    404
+                </div>
 
-                <p className="text-lg text-white/40 mb-12 max-w-md mx-auto">
-                    The page you&apos;re looking for doesn&apos;t exist or has been moved.
-                </p>
+                <div className="mt-[-5vw]">
+                    <h1 className="text-4xl md:text-6xl mb-6">
+                        Bridge not found
+                    </h1>
 
-                <MagneticButton className="btn-primary pointer-events-auto">
-                    <Link href="/">
-                        Back to Home
+                    <p className="text-[var(--text-secondary)] text-lg mb-12 max-w-md mx-auto">
+                        The connection you&apos;re looking for doesn&apos;t exist.
+                    </p>
+
+                    <Link
+                        href="/"
+                        className="btn-primary inline-flex pointer-events-auto"
+                    >
+                        <span>Return Home</span>
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M3 8H13M13 8L8 3M13 8L8 13" stroke="currentColor" strokeWidth="1.5" />
+                        </svg>
                     </Link>
-                </MagneticButton>
+                </div>
             </motion.div>
 
             {/* Footer */}
-            <div className="absolute bottom-8 text-xs text-white/20">
+            <div className="absolute bottom-8 text-xs text-[var(--text-muted)] syne tracking-widest">
                 Context Bridge
             </div>
         </div>

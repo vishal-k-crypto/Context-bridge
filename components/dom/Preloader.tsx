@@ -5,19 +5,20 @@ import { motion, AnimatePresence } from 'framer-motion'
 
 export default function Preloader() {
     const [isLoading, setIsLoading] = useState(true)
-    const [progress, setProgress] = useState(0)
+    const [count, setCount] = useState(0)
 
     useEffect(() => {
+        // Count up animation
         const interval = setInterval(() => {
-            setProgress(prev => {
+            setCount(prev => {
                 if (prev >= 100) {
                     clearInterval(interval)
-                    setTimeout(() => setIsLoading(false), 400)
+                    setTimeout(() => setIsLoading(false), 300)
                     return 100
                 }
-                return prev + Math.random() * 20
+                return prev + 2
             })
-        }, 80)
+        }, 20)
 
         return () => clearInterval(interval)
     }, [])
@@ -26,30 +27,44 @@ export default function Preloader() {
         <AnimatePresence>
             {isLoading && (
                 <motion.div
-                    initial={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.6 }}
-                    className="fixed inset-0 z-[99999] bg-black flex flex-col items-center justify-center"
+                    className="fixed inset-0 z-[99999] bg-black flex items-center justify-center"
+                    exit={{
+                        clipPath: 'inset(0 0 100% 0)',
+                        transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
+                    }}
                 >
-                    {/* Logo */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5 }}
-                        className="text-2xl font-bold tracking-tight mb-8"
-                    >
-                        <span className="text-white">Context</span>
-                        <span className="text-white/40">Bridge</span>
-                    </motion.div>
-
-                    {/* Progress Bar */}
-                    <div className="w-48 h-[1px] bg-white/10 rounded-full overflow-hidden">
+                    {/* The bridge reveal */}
+                    <div className="relative">
+                        {/* Counter */}
                         <motion.div
-                            className="h-full bg-white"
-                            initial={{ width: 0 }}
-                            animate={{ width: `${Math.min(progress, 100)}%` }}
-                            transition={{ duration: 0.2 }}
-                        />
+                            className="text-8xl md:text-[12rem] font-light text-white/10"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                        >
+                            {String(count).padStart(3, '0')}
+                        </motion.div>
+
+                        {/* Brand */}
+                        <motion.div
+                            className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-full pt-8"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.3 }}
+                        >
+                            <span className="text-sm tracking-[0.3em] text-[var(--text-muted)] syne uppercase">
+                                Context Bridge
+                            </span>
+                        </motion.div>
+                    </div>
+
+                    {/* Progress line */}
+                    <div className="absolute bottom-20 left-1/2 -translate-x-1/2 w-32">
+                        <div className="h-[1px] bg-white/10 w-full">
+                            <motion.div
+                                className="h-full bg-[var(--accent)]"
+                                style={{ width: `${count}%` }}
+                            />
+                        </div>
                     </div>
                 </motion.div>
             )}
