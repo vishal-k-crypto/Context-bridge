@@ -69,6 +69,22 @@ body {
   scrollbar-width: none;
 }
 
+/* Text readability helpers */
+.text-shadow {
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.8);
+}
+
+.text-shadow-lg {
+  text-shadow: 0 4px 40px rgba(0, 0, 0, 0.9);
+}
+
+/* Backdrop for text over 3D */
+.text-backdrop {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3));
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
 /* Premium Typography */
 h1,
 h2,

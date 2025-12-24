@@ -13,29 +13,30 @@ export default function Navbar() {
         <nav className="fixed top-0 left-0 w-full z-50 p-6 md:p-8 flex justify-between items-center pointer-events-none">
             {/* Logo */}
             <div
-                className="text-xl font-bold tracking-tighter pointer-events-auto cursor-pointer mix-blend-difference"
+                className="text-xl font-bold tracking-tight pointer-events-auto cursor-pointer"
                 onClick={() => scrollTo('top')}
             >
-                AGENCY<span className="opacity-30">.OS</span>
+                <span className="text-white">Context</span>
+                <span className="text-white/40">Bridge</span>
             </div>
 
             {/* Navigation Links */}
             <div className="hidden md:flex gap-10 pointer-events-auto">
                 <button
                     onClick={() => scrollTo('#section-about')}
-                    className="text-sm text-white/50 hover:text-white transition-colors uppercase tracking-widest animated-underline"
+                    className="text-sm text-white/50 hover:text-white transition-colors"
                 >
                     About
                 </button>
                 <button
                     onClick={() => scrollTo('#section-services')}
-                    className="text-sm text-white/50 hover:text-white transition-colors uppercase tracking-widest animated-underline"
+                    className="text-sm text-white/50 hover:text-white transition-colors"
                 >
                     Services
                 </button>
                 <button
                     onClick={() => scrollTo('#section-work')}
-                    className="text-sm text-white/50 hover:text-white transition-colors uppercase tracking-widest animated-underline"
+                    className="text-sm text-white/50 hover:text-white transition-colors"
                 >
                     Work
                 </button>
@@ -44,7 +45,7 @@ export default function Navbar() {
             {/* Contact CTA */}
             <button
                 onClick={() => scrollTo('#section-contact')}
-                className="hidden md:block pointer-events-auto px-6 py-3 border border-white/10 rounded-full text-xs uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300"
+                className="hidden md:block pointer-events-auto px-5 py-2.5 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-sm hover:bg-white hover:text-black transition-all"
             >
                 Contact
             </button>
