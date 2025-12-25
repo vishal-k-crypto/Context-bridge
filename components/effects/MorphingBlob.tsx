@@ -1,14 +1,21 @@
 'use client'
 
-import { useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
 
 export default function MorphingBlob() {
     return (
-        <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div
+            className="fixed inset-0 pointer-events-none z-0 overflow-hidden transition-opacity duration-500"
+            style={{
+                // Sync blob opacity with global background opacity
+                opacity: 'calc(var(--bg-opacity, 1) * 0.8)',
+                // Add subtle blur when background is blurred
+                filter: 'blur(calc(var(--bg-blur, 0px) * 0.3))',
+            }}
+        >
             {/* Primary blob */}
             <motion.div
-                className="absolute w-[800px] h-[800px] rounded-full opacity-30"
+                className="absolute w-[800px] h-[800px] rounded-full"
                 style={{
                     background: 'radial-gradient(circle, rgba(0,168,255,0.4) 0%, rgba(124,58,237,0.2) 50%, transparent 70%)',
                     filter: 'blur(80px)',
@@ -32,7 +39,7 @@ export default function MorphingBlob() {
 
             {/* Secondary blob */}
             <motion.div
-                className="absolute w-[600px] h-[600px] rounded-full opacity-20"
+                className="absolute w-[600px] h-[600px] rounded-full"
                 style={{
                     background: 'radial-gradient(circle, rgba(0,255,163,0.3) 0%, rgba(0,168,255,0.1) 50%, transparent 70%)',
                     filter: 'blur(60px)',
@@ -53,7 +60,7 @@ export default function MorphingBlob() {
 
             {/* Tertiary accent blob */}
             <motion.div
-                className="absolute w-[400px] h-[400px] rounded-full opacity-15"
+                className="absolute w-[400px] h-[400px] rounded-full"
                 style={{
                     background: 'radial-gradient(circle, rgba(124,58,237,0.5) 0%, transparent 60%)',
                     filter: 'blur(50px)',

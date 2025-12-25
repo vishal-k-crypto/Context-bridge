@@ -19,6 +19,7 @@ export default function ParallaxAbout() {
             ref={containerRef}
             className="relative min-h-screen py-32 overflow-hidden"
             id="section-about"
+            data-section="about"
         >
             {/* Background elements */}
             <motion.div
@@ -84,7 +85,7 @@ export default function ParallaxAbout() {
                     </div>
 
                     {/* Right: Stats */}
-                    <div className="space-y-8">
+                    <div className="space-y-6">
                         {[
                             { value: '40%', label: 'of work time spent on repetitive tasks', color: '#00a8ff' },
                             { value: '$5T', label: 'lost annually to manual inefficiency', color: '#7c3aed' },
@@ -92,19 +93,26 @@ export default function ParallaxAbout() {
                         ].map((stat, index) => (
                             <motion.div
                                 key={index}
-                                className="flex items-center gap-6 p-6 rounded-2xl bg-white/5 border border-white/5"
+                                className="flex items-center gap-6 p-8 rounded-2xl backdrop-blur-xl border border-white/10"
+                                style={{
+                                    background: 'linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.6) 100%)',
+                                    boxShadow: '0 8px 32px rgba(0,0,0,0.4)'
+                                }}
                                 initial={{ opacity: 0, x: 50 }}
                                 whileInView={{ opacity: 1, x: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: 0.2 + index * 0.1 }}
                             >
                                 <div
-                                    className="text-5xl font-bold"
-                                    style={{ color: stat.color }}
+                                    className="text-5xl font-bold min-w-[100px]"
+                                    style={{
+                                        color: stat.color,
+                                        textShadow: `0 0 30px ${stat.color}40`
+                                    }}
                                 >
                                     {stat.value}
                                 </div>
-                                <div className="text-white/40">
+                                <div className="text-white/70 text-base leading-relaxed">
                                     {stat.label}
                                 </div>
                             </motion.div>

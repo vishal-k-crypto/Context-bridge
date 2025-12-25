@@ -42,6 +42,7 @@ export default function ImmersivePortfolio() {
             ref={containerRef}
             className="relative"
             style={{ height: `${projects.length * 150}vh` }} // Increased from 100vh to 150vh per project
+            data-section="portfolio"
         >
             {projects.map((project, index) => {
                 const start = index / projects.length

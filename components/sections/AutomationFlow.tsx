@@ -1,181 +1,432 @@
 'use client'
 
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useRef, useEffect, useState } from 'react'
+import Image from 'next/image'
+import { motion } from 'framer-motion'
+import Link from 'next/link'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const automationSteps = [
     {
         id: 1,
-        title: 'Data Input',
-        description: 'Raw data streams in from multiple sources',
-        icon: '📥',
+        title: 'Scout Agent',
+        description: 'Discovers SDKs, scrapes docs, analyzes repositories',
+        icon: '/icons/icon-scout.png',
         color: '#00a8ff'
     },
     {
         id: 2,
-        title: 'AI Processing',
-        description: 'LLM agents analyze and categorize',
-        icon: '🧠',
+        title: 'Architect Agent',
+        description: '3D scoring: LLM Utility × Determinism × Efficiency',
+        icon: '/icons/icon-architect.png',
         color: '#7c3aed'
     },
     {
         id: 3,
-        title: 'Decision Engine',
-        description: 'Logic gates route data to actions',
-        icon: '⚙️',
+        title: 'Coder Agent',
+        description: 'Generates FastMCP-compliant Python code',
+        icon: '/icons/icon-coder.png',
         color: '#00ffa3'
     },
     {
         id: 4,
-        title: 'Execution',
-        description: 'Automated actions fire across systems',
-        icon: '⚡',
+        title: 'Sandbox',
+        description: 'Docker verification with 3-strike certification',
+        icon: '/icons/icon-sandbox.png',
         color: '#ff6b6b'
     },
     {
         id: 5,
-        title: 'Output',
-        description: 'Results delivered in real-time',
-        icon: '📤',
-        color: '#00a8ff'
+        title: 'Registry',
+        description: 'Certified tools deployed to semantic registry',
+        icon: '/icons/icon-registry.png',
+        color: '#ffd700'
     }
 ]
 
 export default function AutomationFlow() {
+    const containerRef = useRef<HTMLDivElement>(null)
+    const progressRef = useRef<HTMLDivElement>(null)
     const [activeStep, setActiveStep] = useState(0)
-    const [isPlaying, setIsPlaying] = useState(false)
+    const [scrollProgress, setScrollProgress] = useState(0) // 0-1 overall progress
+    const [particles, setParticles] = useState<{ id: number; x: number; color: string }[]>([])
 
-    const playSequence = () => {
-        if (isPlaying) return
-        setIsPlaying(true)
-        setActiveStep(0)
+    useEffect(() => {
+        const container = containerRef.current
+        const progress = progressRef.current
+        if (!container || !progress) return
 
-        automationSteps.forEach((_, index) => {
-            setTimeout(() => {
-                setActiveStep(index)
-                if (index === automationSteps.length - 1) {
-                    setTimeout(() => {
-                        setIsPlaying(false)
-                    }, 1000)
+        // Create the scroll-driven animation
+        const ctx = gsap.context(() => {
+            // Pin the section and scrub the progress
+            ScrollTrigger.create({
+                trigger: container,
+                start: 'top top',
+                end: '+=200%', // 2x viewport height - tighter experience
+                pin: true,
+                scrub: 0.5, // Near-instant response
+                onUpdate: (self) => {
+                    // Store raw progress for circular indicators
+                    setScrollProgress(self.progress)
+
+                    // Calculate which step we're on based on scroll progress
+                    const stepProgress = self.progress * automationSteps.length
+                    const currentStep = Math.min(Math.floor(stepProgress), automationSteps.length - 1)
+
+                    // Update progress bar width - instant
+                    const progressPercent = (stepProgress / automationSteps.length) * 100
+                    progress.style.width = `${progressPercent}%`
+
+                    // Update active step
+                    setActiveStep(currentStep)
+
+                    // Spawn particles at transition points
+                    const stepFraction = stepProgress % 1
+                    if (stepFraction > 0.4 && stepFraction < 0.6) {
+                        const stepColor = automationSteps[currentStep]?.color || '#00a8ff'
+                        const particleX = (currentStep / (automationSteps.length - 1)) * 100
+                        setParticles(prev => {
+                            if (prev.length > 15) return prev.slice(-10)
+                            return [...prev, { id: Date.now() + Math.random(), x: particleX, color: stepColor }]
+                        })
+                    }
                 }
-            }, index * 800)
-        })
-    }
+            })
+        }, container)
+
+        return () => ctx.revert()
+    }, [])
 
     return (
-        <section className="min-h-screen flex flex-col items-center justify-center py-32 px-8">
-            <div className="text-center mb-16">
+        <section
+            ref={containerRef}
+            className="h-screen flex flex-col items-center justify-center px-8 relative overflow-hidden"
+            data-section="automation"
+        >
+            {/* Blur backdrop - focuses attention on the effect (behind everything) */}
+            <motion.div
+                className="absolute inset-0 pointer-events-none z-[-1]"
+                animate={{
+                    backdropFilter: (scrollProgress > 0.05 && scrollProgress < 0.95) ? 'blur(8px)' : 'blur(0px)',
+                    background: (scrollProgress > 0.05 && scrollProgress < 0.95)
+                        ? 'rgba(0, 0, 0, 0.6)'
+                        : 'rgba(0, 0, 0, 0)'
+                }}
+                transition={{ duration: 0.3 }}
+            />
+
+            {/* Background glow based on active step */}
+            <motion.div
+                className="absolute inset-0 pointer-events-none z-0"
+                animate={{
+                    background: `radial-gradient(ellipse at center, ${automationSteps[activeStep]?.color}20 0%, transparent 60%)`
+                }}
+                transition={{ duration: 0.3 }}
+            />
+
+            {/* Header */}
+            <div className="text-center mb-20 relative z-10">
                 <span className="text-xs font-bold text-[#00ffa3] mb-4 uppercase tracking-[0.3em] block">
                     Live Demo
                 </span>
-                <h2 className="text-5xl md:text-7xl font-bold mb-4">See It In Action</h2>
+                <h2 className="text-5xl md:text-7xl font-bold mb-4">
+                    STEP {activeStep + 1} OF 5: <span style={{ color: automationSteps[activeStep]?.color }}>{automationSteps[activeStep]?.title}</span>
+                </h2>
                 <p className="text-white/40 max-w-xl mx-auto">
-                    Watch how data flows through our automation pipeline in real-time
+                    {automationSteps[activeStep]?.description}
                 </p>
             </div>
 
             {/* Flow Visualization */}
-            <div className="relative w-full max-w-5xl">
-                {/* Connection Lines */}
-                <div className="absolute top-1/2 left-0 right-0 h-1 bg-white/5 -translate-y-1/2 z-0">
-                    <motion.div
-                        className="h-full bg-gradient-to-r from-[#00a8ff] via-[#7c3aed] to-[#00ffa3]"
-                        initial={{ width: '0%' }}
-                        animate={{ width: `${(activeStep / (automationSteps.length - 1)) * 100}%` }}
-                        transition={{ duration: 0.5, ease: 'easeOut' }}
+            <div className="relative w-full max-w-5xl z-10">
+
+                {/* Connection Line Background */}
+                <div className="absolute top-1/2 left-0 right-0 h-2 bg-white/10 -translate-y-1/2 z-0 rounded-full overflow-hidden">
+                    {/* Animated Progress Bar - Neon tube effect */}
+                    <div
+                        ref={progressRef}
+                        className="h-full rounded-full"
+                        style={{
+                            background: `linear-gradient(90deg, #00a8ff, #7c3aed, #00ffa3, #ff6b6b, #00a8ff)`,
+                            boxShadow: `
+                                0 0 10px ${automationSteps[activeStep]?.color},
+                                0 0 20px ${automationSteps[activeStep]?.color},
+                                0 0 40px ${automationSteps[activeStep]?.color}80,
+                                inset 0 0 10px rgba(255,255,255,0.3)
+                            `,
+                            width: '0%'
+                        }}
                     />
+                </div>
+
+                {/* Floating particles */}
+                <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                    {particles.map((particle) => (
+                        <motion.div
+                            key={particle.id}
+                            className="absolute w-2 h-2 rounded-full"
+                            style={{
+                                left: `${particle.x}%`,
+                                top: '50%',
+                                background: particle.color,
+                                boxShadow: `0 0 10px ${particle.color}`
+                            }}
+                            initial={{ opacity: 1, scale: 1, y: 0 }}
+                            animate={{
+                                opacity: 0,
+                                scale: 0,
+                                y: (Math.random() - 0.5) * 100,
+                                x: (Math.random() - 0.5) * 50
+                            }}
+                            transition={{ duration: 1.5, ease: 'easeOut' }}
+                            onAnimationComplete={() => {
+                                setParticles(prev => prev.filter(p => p.id !== particle.id))
+                            }}
+                        />
+                    ))}
                 </div>
 
                 {/* Steps */}
                 <div className="flex justify-between relative z-10">
                     {automationSteps.map((step, index) => (
-                        <motion.div
+                        <div
                             key={step.id}
                             className="flex flex-col items-center"
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: index * 0.1 }}
                         >
-                            {/* Node */}
+                            {/* Node - Premium layered design */}
                             <motion.div
-                                className={`w-20 h-20 rounded-full flex items-center justify-center text-3xl cursor-pointer transition-all duration-300 ${index <= activeStep ? 'bg-black' : 'bg-white/5'
-                                    }`}
-                                style={{
-                                    border: index <= activeStep ? `2px solid ${step.color}` : '2px solid transparent',
-                                    boxShadow: index === activeStep ? `0 0 40px ${step.color}40` : 'none'
+                                className="relative"
+                                animate={{
+                                    scale: index === activeStep ? 1.1 : 1,
+                                    y: index === activeStep ? -5 : 0
                                 }}
-                                onClick={() => setActiveStep(index)}
-                                whileHover={{ scale: 1.1 }}
-                                whileTap={{ scale: 0.95 }}
+                                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                             >
-                                {step.icon}
+                                {/* Outer glow ring */}
+                                <motion.div
+                                    className="absolute inset-0 rounded-full"
+                                    style={{
+                                        background: `radial-gradient(circle, ${step.color}30 0%, transparent 70%)`,
+                                    }}
+                                    animate={{
+                                        scale: index === activeStep ? [1.5, 2, 1.5] : 1.5,
+                                        opacity: index === activeStep ? [0.5, 1, 0.5] : 0,
+                                    }}
+                                    transition={{ duration: 1.5, repeat: Infinity }}
+                                />
+
+                                {/* Pulse ring */}
+                                <motion.div
+                                    className="absolute inset-0 rounded-full"
+                                    style={{
+                                        border: `2px solid ${step.color}`,
+                                    }}
+                                    animate={{
+                                        scale: index === activeStep ? [1, 1.4] : 1,
+                                        opacity: index === activeStep ? [0.8, 0] : 0,
+                                    }}
+                                    transition={{ duration: 1, repeat: Infinity }}
+                                />
+
+                                {/* Circular Progress Ring - SVG */}
+                                <svg
+                                    className="absolute inset-[-4px] w-[104px] h-[104px]"
+                                    viewBox="0 0 104 104"
+                                >
+                                    {/* Background circle */}
+                                    <circle
+                                        cx="52"
+                                        cy="52"
+                                        r="48"
+                                        fill="none"
+                                        stroke="rgba(255,255,255,0.05)"
+                                        strokeWidth="3"
+                                    />
+                                    {/* Progress circle - synced with main progress bar */}
+                                    <circle
+                                        cx="52"
+                                        cy="52"
+                                        r="48"
+                                        fill="none"
+                                        stroke={step.color}
+                                        strokeWidth="3"
+                                        strokeLinecap="round"
+                                        style={{
+                                            strokeDasharray: 2 * Math.PI * 48,
+                                            strokeDashoffset: 2 * Math.PI * 48 * (1 - (() => {
+                                                // Sync with main progress bar
+                                                // Each step gets 1/5 of the total progress
+                                                const stepThreshold = (index + 1) / automationSteps.length
+                                                const stepStart = index / automationSteps.length
+
+                                                // If scroll hasn't reached this step yet
+                                                if (scrollProgress <= stepStart) return 0
+                                                // If scroll is past this step
+                                                if (scrollProgress >= stepThreshold) return 1
+                                                // Currently filling this step
+                                                return (scrollProgress - stepStart) / (stepThreshold - stepStart)
+                                            })()),
+                                            transform: 'rotate(-90deg)',
+                                            transformOrigin: 'center',
+                                            filter: `drop-shadow(0 0 8px ${step.color})`,
+                                        }}
+                                    />
+                                </svg>
+
+                                {/* Main container */}
+                                <motion.div
+                                    className="relative w-24 h-24 rounded-full flex items-center justify-center overflow-hidden"
+                                    style={{
+                                        background: index <= activeStep
+                                            ? `linear-gradient(135deg, ${step.color}20 0%, rgba(0,0,0,0.9) 100%)`
+                                            : 'rgba(255,255,255,0.03)',
+                                        backdropFilter: 'blur(10px)',
+                                        boxShadow: index === activeStep
+                                            ? `0 0 60px ${step.color}50, inset 0 0 30px ${step.color}20`
+                                            : index < activeStep
+                                                ? `0 0 20px ${step.color}30`
+                                                : 'none',
+                                        border: `1px solid ${index <= activeStep ? `${step.color}50` : 'rgba(255,255,255,0.05)'}`,
+                                    }}
+                                >
+                                    {/* Icon */}
+                                    <motion.div
+                                        className="relative w-20 h-20 z-10 rounded-full overflow-hidden"
+                                        animate={{
+                                            y: index === activeStep ? [0, -4, 0] : 0,
+                                            rotate: index === activeStep ? [0, 5, -5, 0] : 0
+                                        }}
+                                        transition={{ duration: 2, repeat: Infinity }}
+                                    >
+                                        <Image
+                                            src={step.icon}
+                                            alt={step.title}
+                                            fill
+                                            className="object-cover rounded-full"
+                                            style={{
+                                                filter: index <= activeStep
+                                                    ? `drop-shadow(0 0 15px ${step.color}80)`
+                                                    : 'grayscale(1) opacity(0.3)'
+                                            }}
+                                        />
+                                    </motion.div>
+                                </motion.div>
                             </motion.div>
 
                             {/* Label */}
-                            <div className="mt-4 text-center">
-                                <div className={`font-bold transition-colors ${index <= activeStep ? 'text-white' : 'text-white/30'
-                                    }`}>
+                            <motion.div
+                                className="mt-6 text-center"
+                                animate={{
+                                    opacity: index <= activeStep ? 1 : 0.3,
+                                    y: index === activeStep ? 0 : 5
+                                }}
+                            >
+                                <motion.div
+                                    className="font-bold text-lg"
+                                    animate={{
+                                        color: index === activeStep ? step.color : index < activeStep ? '#ffffff' : 'rgba(255,255,255,0.3)'
+                                    }}
+                                >
                                     {step.title}
-                                </div>
-                                <AnimatePresence>
-                                    {index === activeStep && (
-                                        <motion.div
-                                            initial={{ opacity: 0, height: 0 }}
-                                            animate={{ opacity: 1, height: 'auto' }}
-                                            exit={{ opacity: 0, height: 0 }}
-                                            className="text-sm text-white/50 mt-2 max-w-[150px]"
-                                        >
-                                            {step.description}
-                                        </motion.div>
-                                    )}
-                                </AnimatePresence>
-                            </div>
-                        </motion.div>
+                                </motion.div>
+                                <motion.div
+                                    className="text-sm text-white/50 mt-2 max-w-[140px] h-12"
+                                    animate={{
+                                        opacity: index === activeStep ? 1 : 0,
+                                        y: index === activeStep ? 0 : 10
+                                    }}
+                                >
+                                    {step.description}
+                                </motion.div>
+                            </motion.div>
+                        </div>
                     ))}
                 </div>
             </div>
 
-            {/* Play Button */}
-            <motion.button
-                onClick={playSequence}
-                className="mt-16 px-8 py-4 bg-gradient-to-r from-[#00a8ff] to-[#7c3aed] rounded-full font-bold uppercase tracking-widest text-sm pointer-events-auto"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                disabled={isPlaying}
+            {/* Current step indicator */}
+            <motion.div
+                className="mt-20 text-center"
+                key={activeStep}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
             >
-                {isPlaying ? 'Processing...' : 'Run Automation'}
-            </motion.button>
+                <div className="text-sm text-white/30 uppercase tracking-widest mb-2">
+                    Step {activeStep + 1} of {automationSteps.length}
+                </div>
+                <div
+                    className="text-2xl font-bold"
+                    style={{ color: automationSteps[activeStep]?.color }}
+                >
+                    {automationSteps[activeStep]?.title}
+                </div>
+            </motion.div>
 
-            {/* Data Particles Animation */}
-            <AnimatePresence>
-                {isPlaying && (
-                    <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                        {[...Array(20)].map((_, i) => (
-                            <motion.div
-                                key={i}
-                                className="absolute w-2 h-2 rounded-full"
-                                style={{
-                                    background: automationSteps[activeStep]?.color || '#00a8ff',
-                                    left: `${10 + (activeStep / automationSteps.length) * 80}%`,
-                                    top: '50%',
-                                }}
-                                initial={{ opacity: 0, scale: 0 }}
-                                animate={{
-                                    opacity: [0, 1, 0],
-                                    scale: [0, 1, 0],
-                                    x: (Math.random() - 0.5) * 200,
-                                    y: (Math.random() - 0.5) * 200,
-                                }}
-                                exit={{ opacity: 0 }}
-                                transition={{
-                                    duration: 1,
-                                    delay: i * 0.05,
-                                }}
-                            />
-                        ))}
-                    </div>
-                )}
-            </AnimatePresence>
+            {/* Try AI Employee CTA - shows when flow is complete */}
+            <motion.div
+                className="mt-8"
+                animate={{
+                    opacity: activeStep >= automationSteps.length - 1 ? 1 : 0,
+                    scale: activeStep >= automationSteps.length - 1 ? 1 : 0.9,
+                    y: activeStep >= automationSteps.length - 1 ? 0 : 20
+                }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+            >
+                <Link href="/demo/mcp-builder">
+                    <motion.button
+                        className="relative px-8 py-4 rounded-2xl font-bold text-lg overflow-hidden group"
+                        style={{
+                            background: 'linear-gradient(135deg, #00ffa3 0%, #7c3aed 100%)',
+                            boxShadow: '0 0 40px rgba(0, 255, 163, 0.3), 0 0 80px rgba(124, 58, 237, 0.2)'
+                        }}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                    >
+                        <span className="relative z-10 text-black flex items-center gap-3">
+                            <span>🚀</span>
+                            <span>Try AI Employee</span>
+                            <motion.span
+                                animate={{ x: [0, 5, 0] }}
+                                transition={{ duration: 1.5, repeat: Infinity }}
+                            >
+                                →
+                            </motion.span>
+                        </span>
+                        {/* Shine effect */}
+                        <motion.div
+                            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full"
+                            animate={{ x: ['-100%', '200%'] }}
+                            transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
+                        />
+                        {/* Glow ring */}
+                        <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                            style={{
+                                boxShadow: '0 0 30px rgba(0, 255, 163, 0.5), 0 0 60px rgba(124, 58, 237, 0.3)'
+                            }}
+                        />
+                    </motion.button>
+                </Link>
+                <p className="text-white/40 text-sm mt-3 text-center">
+                    Experience the MCP factory in action
+                </p>
+            </motion.div>
+
+            {/* Scroll hint */}
+            <motion.div
+                className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/20 text-sm flex flex-col items-center gap-2"
+                animate={{ opacity: activeStep === 0 ? 1 : 0 }}
+            >
+                <span>Scroll to progress</span>
+                <motion.div
+                    className="w-[1px] h-8 bg-gradient-to-b from-white/20 to-transparent"
+                    animate={{ scaleY: [1, 0.5, 1] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                />
+            </motion.div>
         </section>
     )
 }

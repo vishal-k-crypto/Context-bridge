@@ -18,6 +18,7 @@ export default function ImmersiveHero() {
             ref={containerRef}
             className="relative h-[150vh]"
             id="section-hero"
+            data-section="hero"
         >
             <motion.div
                 className="sticky top-0 h-screen flex flex-col items-center justify-center"
@@ -25,7 +26,7 @@ export default function ImmersiveHero() {
             >
                 {/* Minimal content */}
                 <motion.div
-                    className="relative z-10 text-center"
+                    className="relative z-50 text-center"
                     style={{ y }}
                 >
                     {/* Eyebrow */}

@@ -14,7 +14,7 @@ export default function TrustSection() {
     ]
 
     return (
-        <section className="py-20 border-b border-white/5 overflow-hidden">
+        <section className="py-40 border-b border-white/5 overflow-hidden" data-section="trust">
             <div className="text-center mb-12">
                 <span className="text-xs text-white/30 uppercase tracking-[0.3em]">
                     Trusted By Industry Leaders

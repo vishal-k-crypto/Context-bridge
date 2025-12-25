@@ -11,7 +11,7 @@ export default function StatsSection() {
     ]
 
     return (
-        <section className="py-32 px-8 md:px-20 border-y border-white/5">
+        <section className="py-48 px-8 md:px-20 border-y border-white/5" data-section="stats">
             <div className="max-w-7xl mx-auto">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8">
                     {stats.map((stat, index) => (

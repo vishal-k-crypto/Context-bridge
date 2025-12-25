@@ -10,7 +10,14 @@ interface SceneProps {
 
 export default function Scene({ children }: SceneProps) {
     return (
-        <div className="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none">
+        <div
+            className="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none"
+            style={{
+                opacity: 'var(--bg-opacity, 1)',
+                filter: 'blur(var(--bg-blur, 0px))',
+                transition: 'opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), filter 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+            }}
+        >
             <Canvas
                 dpr={[1, 2]}
                 gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}

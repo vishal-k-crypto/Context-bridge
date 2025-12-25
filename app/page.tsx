@@ -16,6 +16,7 @@ import MorphingBlob from '@/components/effects/MorphingBlob'
 import ScrollProgress from '@/components/effects/ScrollProgress'
 import FloatingTags from '@/components/effects/FloatingTags'
 import TimeGreeting from '@/components/effects/TimeGreeting'
+import BackgroundController from '@/components/effects/BackgroundController'
 
 // New Immersive Sections
 import ImmersiveHero from '@/components/sections/ImmersiveHero'
@@ -51,31 +52,33 @@ export default function Home() {
         <DataFlow position={[0, 0, -15]} />
       </Scene>
 
-      {/* DOM Content */}
-      <main className="relative w-full text-white">
+      {/* DOM Content with Background Controller */}
+      <BackgroundController>
+        <main className="relative w-full text-white">
 
-        {/* Section 1: Hero - Immersive intro */}
-        <ImmersiveHero />
+          {/* Section 1: Hero - Immersive intro */}
+          <ImmersiveHero />
 
-        {/* Section 2: About - The Problem */}
-        <ParallaxAbout />
+          {/* Section 2: About - The Problem */}
+          <ParallaxAbout />
 
-        {/* Section 3: Live Demo - Interactive automation flow */}
-        <AutomationFlow />
+          {/* Section 3: Live Demo - Interactive automation flow */}
+          <AutomationFlow />
 
-        {/* Section 4: Portfolio - Full-screen project takeovers */}
-        <ImmersivePortfolio />
+          {/* Section 4: Portfolio - Full-screen project takeovers */}
+          <ImmersivePortfolio />
 
-        {/* Section 5: Trust signals */}
-        <TrustSection />
+          {/* Section 5: Trust signals */}
+          <TrustSection />
 
-        {/* Section 6: Stats with animated counters */}
-        <StatsSection />
+          {/* Section 6: Stats with animated counters */}
+          <StatsSection />
 
-        {/* Section 7: Contact - Immersive CTA */}
-        <ImmersiveContact />
+          {/* Section 7: Contact - Immersive CTA */}
+          <ImmersiveContact />
 
-      </main>
+        </main>
+      </BackgroundController>
     </ScrollManager>
   )
 }

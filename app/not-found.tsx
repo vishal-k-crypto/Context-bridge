@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import MagneticButton from '@/components/ui/MagneticButton'
 
 export default function NotFound() {
     return (
@@ -33,11 +32,17 @@ export default function NotFound() {
                     The page you&apos;re looking for doesn&apos;t exist or has been moved.
                 </p>
 
-                <MagneticButton className="btn-primary pointer-events-auto">
-                    <Link href="/">
+                <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                >
+                    <Link
+                        href="/"
+                        className="inline-block px-8 py-4 bg-gradient-to-r from-[#00ffa3] to-[#7c3aed] rounded-full font-bold text-black hover:shadow-lg hover:shadow-[#00ffa3]/30 transition-shadow"
+                    >
                         Back to Home
                     </Link>
-                </MagneticButton>
+                </motion.div>
             </motion.div>
 
             {/* Footer */}
