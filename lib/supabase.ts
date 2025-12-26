@@ -39,11 +39,14 @@ export interface MCPResult {
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
 
-// Create client (will be non-functional if credentials are missing)
-export const supabase: SupabaseClient = createClient(supabaseUrl, supabaseAnonKey)
-
 // Check if Supabase is configured
 export const isSupabaseConfigured = Boolean(supabaseUrl && supabaseAnonKey)
+
+// Create client only if credentials are available, otherwise create a dummy client
+// This prevents the app from crashing when Supabase is not configured
+export const supabase: SupabaseClient = isSupabaseConfigured
+    ? createClient(supabaseUrl, supabaseAnonKey)
+    : createClient('https://placeholder.supabase.co', 'placeholder-key')
 
 /**
  * Validate a coupon code
