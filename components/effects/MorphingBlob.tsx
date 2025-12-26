@@ -60,11 +60,11 @@ export default function MorphingBlob() {
 
             {/* Tertiary accent blob */}
             <motion.div
-                className="absolute w-[400px] h-[400px] rounded-full"
+                className="absolute w-[600px] h-[600px] rounded-full"
                 style={{
-                    background: 'radial-gradient(circle, rgba(124,58,237,0.5) 0%, transparent 60%)',
-                    filter: 'blur(50px)',
-                    left: '10%',
+                    background: 'radial-gradient(circle, rgba(124,58,237,0.3) 0%, transparent 70%)',
+                    filter: 'blur(80px)',
+                    left: '-5%',
                     top: '30%',
                 }}
                 animate={{

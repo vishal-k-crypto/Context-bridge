@@ -9,12 +9,12 @@ export default function CTASection() {
 
             {/* Animated background orbs - using theme colors */}
             <motion.div
-                className="absolute w-[600px] h-[600px] rounded-full pointer-events-none"
+                className="absolute w-[800px] h-[800px] rounded-full pointer-events-none"
                 style={{
-                    background: 'radial-gradient(circle, rgba(0, 168, 255, 0.12) 0%, transparent 60%)',
-                    filter: 'blur(60px)',
-                    left: '-10%',
-                    top: '-20%',
+                    background: 'radial-gradient(circle, rgba(0, 212, 170, 0.08) 0%, transparent 70%)',
+                    filter: 'blur(80px)',
+                    left: '-15%',
+                    top: '-40%',
                 }}
                 animate={{
                     x: [0, 30, 0],
@@ -67,13 +67,7 @@ export default function CTASection() {
                 <div
                     className="absolute top-1/2 left-0 w-full h-[1px]"
                     style={{
-                        background: 'linear-gradient(90deg, transparent, rgba(0, 255, 163, 0.1), transparent)',
-                    }}
-                />
-                <div
-                    className="absolute top-0 left-1/2 w-[1px] h-full"
-                    style={{
-                        background: 'linear-gradient(180deg, transparent, rgba(0, 168, 255, 0.08), transparent)',
+                        background: 'linear-gradient(90deg, transparent 10%, rgba(0, 212, 170, 0.1) 50%, transparent 90%)',
                     }}
                 />
             </div>
@@ -144,13 +138,13 @@ export default function CTASection() {
                         <motion.button
                             className="relative px-14 py-6 rounded-2xl font-bold text-xl overflow-hidden group cursor-pointer"
                             style={{
-                                background: 'linear-gradient(135deg, #00a8ff 0%, #7c3aed 100%)',
-                                boxShadow: '0 0 40px rgba(0, 168, 255, 0.4), 0 0 80px rgba(124, 58, 237, 0.2)',
-                                border: '1px solid rgba(0, 168, 255, 0.5)'
+                                background: 'linear-gradient(135deg, #00a8ff 0%, #00d4aa 50%, #7c3aed 100%)',
+                                boxShadow: '0 0 40px rgba(0, 212, 170, 0.4), 0 0 80px rgba(124, 58, 237, 0.2)',
+                                border: '1px solid rgba(0, 212, 170, 0.5)'
                             }}
                             whileHover={{
                                 scale: 1.05,
-                                boxShadow: '0 0 60px rgba(0, 168, 255, 0.6), 0 0 120px rgba(124, 58, 237, 0.4)'
+                                boxShadow: '0 0 60px rgba(0, 212, 170, 0.6), 0 0 120px rgba(124, 58, 237, 0.4)'
                             }}
                             whileTap={{ scale: 0.98 }}
                             transition={{ type: 'spring', stiffness: 400, damping: 15 }}

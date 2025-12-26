@@ -34,7 +34,7 @@ export default function Footer() {
             </p>
             <div className="flex gap-4 mt-6">
               <a
-                href="mailto:vishal@contextbridge.systems"
+                href="mailto:contact@contextbridge.systems"
                 className="w-10 h-10 bg-white/5 border border-white/10 rounded-lg flex items-center justify-center hover:bg-cyan-500/20 hover:border-cyan-500/50 transition-all duration-300"
               >
                 <Mail className="h-4 w-4" />
@@ -93,10 +93,10 @@ export default function Footer() {
             <ul className="space-y-3 text-sm">
               <li>
                 <a
-                  href="mailto:vishal@contextbridge.systems"
+                  href="mailto:contact@contextbridge.systems"
                   className="hover:text-cyan-400 transition-colors duration-200"
                 >
-                  vishal@contextbridge.systems
+                  contact@contextbridge.systems
                 </a>
               </li>
               <li className="text-gray-500">

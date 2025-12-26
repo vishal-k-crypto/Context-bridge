@@ -2,19 +2,22 @@
 
 import { Canvas } from '@react-three/fiber'
 import { PerspectiveCamera, Preload, Environment } from '@react-three/drei'
-import { Suspense } from 'react'
+import { Suspense, ReactNode } from 'react'
 
 interface SceneProps {
-    children?: React.ReactNode
+    children?: ReactNode
+    // Whether the background should respond to scroll blur/opacity
+    useScrollEffects?: boolean
 }
 
-export default function Scene({ children }: SceneProps) {
+export default function Scene({ children, useScrollEffects = true }: SceneProps) {
     return (
         <div
-            className="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none"
+            className="fixed top-0 left-0 w-full h-full pointer-events-none"
             style={{
-                opacity: 'var(--bg-opacity, 1)',
-                filter: 'blur(var(--bg-blur, 0px))',
+                zIndex: -10,
+                opacity: useScrollEffects ? 'var(--bg-opacity, 1)' : 1,
+                filter: useScrollEffects ? 'blur(var(--bg-blur, 0px))' : 'none',
                 transition: 'opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), filter 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
             }}
         >

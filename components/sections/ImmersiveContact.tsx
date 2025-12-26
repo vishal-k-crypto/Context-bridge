@@ -54,7 +54,7 @@ export default function ImmersiveContact() {
                 >
                     <MagneticButton className="pointer-events-auto">
                         <a
-                            href="mailto:hello@contextbridge.io"
+                            href="mailto:contact@contextbridge.systems"
                             className="block px-8 py-4 bg-white text-black font-medium rounded-full hover:scale-105 transition-transform"
                         >
                             Start a Project
@@ -62,10 +62,10 @@ export default function ImmersiveContact() {
                     </MagneticButton>
 
                     <a
-                        href="mailto:hello@contextbridge.io"
+                        href="mailto:contact@contextbridge.systems"
                         className="text-white/50 hover:text-white transition-colors pointer-events-auto"
                     >
-                        hello@contextbridge.io
+                        contact@contextbridge.systems
                     </a>
                 </motion.div>
             </div>

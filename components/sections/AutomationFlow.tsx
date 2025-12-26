@@ -42,7 +42,7 @@ const automationSteps = [
         title: 'Registry',
         description: 'Certified tools deployed to semantic registry',
         icon: '/icons/icon-registry.png',
-        color: '#ffd700'
+        color: '#00d4aa'
     }
 ]
 
@@ -110,9 +110,6 @@ export default function AutomationFlow() {
                 className="absolute inset-0 pointer-events-none z-[-1]"
                 animate={{
                     backdropFilter: (scrollProgress > 0.05 && scrollProgress < 0.95) ? 'blur(8px)' : 'blur(0px)',
-                    background: (scrollProgress > 0.05 && scrollProgress < 0.95)
-                        ? 'rgba(0, 0, 0, 0.6)'
-                        : 'rgba(0, 0, 0, 0)'
                 }}
                 transition={{ duration: 0.3 }}
             />
@@ -149,7 +146,7 @@ export default function AutomationFlow() {
                         ref={progressRef}
                         className="h-full rounded-full"
                         style={{
-                            background: `linear-gradient(90deg, #00a8ff, #7c3aed, #00ffa3, #ff6b6b, #00a8ff)`,
+                            background: `linear-gradient(90deg, #00a8ff, #7c3aed, #00ffa3, #ff6b6b, #00d4aa)`,
                             boxShadow: `
                                 0 0 10px ${automationSteps[activeStep]?.color},
                                 0 0 20px ${automationSteps[activeStep]?.color},

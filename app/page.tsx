@@ -15,11 +15,9 @@ import ScrollProgress from '@/components/effects/ScrollProgress'
 import FloatingTags from '@/components/effects/FloatingTags'
 import TimeGreeting from '@/components/effects/TimeGreeting'
 import BackgroundController from '@/components/effects/BackgroundController'
-import FragmentedParallax from '@/components/effects/FragmentedParallax'
 
 // New Immersive Sections
 import ImmersiveHero from '@/components/sections/ImmersiveHero'
-import ParallaxAbout from '@/components/sections/ParallaxAbout'
 import AutomationFlow from '@/components/sections/AutomationFlow'
 import CTASection from '@/components/sections/CTASection'
 import ImmersivePortfolio from '@/components/sections/ImmersivePortfolio'
@@ -41,7 +39,7 @@ export default function Home() {
       <FloatingTags />
       <div className="noise-overlay" />
 
-      {/* 3D Scene - Full viewport fixed background */}
+      {/* 3D Scene */}
       <Scene>
         <CameraRig />
         <InfiniteTunnel />
@@ -52,9 +50,6 @@ export default function Home() {
         <DataFlow position={[0, 0, -15]} />
       </Scene>
 
-      {/* Fragmented Parallax - Enabled (set useTextures=true when assets are ready) */}
-      <FragmentedParallax enabled={true} useTextures={false} />
-
       {/* DOM Content with Background Controller */}
       <BackgroundController>
         <main className="relative z-10 w-full text-white">
@@ -62,8 +57,7 @@ export default function Home() {
           {/* Section 1: Hero - Immersive intro */}
           <ImmersiveHero />
 
-          {/* Section 2: About - The Problem */}
-          <ParallaxAbout />
+
 
           {/* Section 3: Live Demo - Interactive automation flow */}
           <AutomationFlow />
