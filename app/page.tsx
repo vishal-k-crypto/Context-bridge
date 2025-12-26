@@ -52,8 +52,8 @@ export default function Home() {
         <DataFlow position={[0, 0, -15]} />
       </Scene>
 
-      {/* Fragmented Parallax - DISABLED for now */}
-      {/* <FragmentedParallax enabled={true} /> */}
+      {/* Fragmented Parallax - Enabled (set useTextures=true when assets are ready) */}
+      <FragmentedParallax enabled={true} useTextures={false} />
 
       {/* DOM Content with Background Controller */}
       <BackgroundController>

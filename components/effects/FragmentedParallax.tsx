@@ -1,84 +1,37 @@
 'use client'
 
-import { useRef, useEffect, useState, useMemo } from 'react'
-import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { useRef, useEffect, useState, useMemo, Suspense } from 'react'
+import { Canvas, useFrame, useThree, useLoader } from '@react-three/fiber'
 import * as THREE from 'three'
 
-// Individual floating shard that responds to mouse
-function FloatingShard({
-    position,
-    size,
-    depth,
-    color,
-    mouseTarget,
-    rotationOffset
-}: {
-    position: [number, number, number]
-    size: number
-    depth: number
-    color: string
-    mouseTarget: React.MutableRefObject<{ x: number; y: number }>
-    rotationOffset: number
-}) {
-    const meshRef = useRef<THREE.Mesh>(null)
-    const currentRotation = useRef({ x: 0, y: 0 })
-    const currentPosition = useRef({ x: position[0], y: position[1] })
-
-    // Movement intensity varies by depth (closer = more movement)
-    const intensity = 1 / (depth + 1)
-
-    useFrame(() => {
-        if (!meshRef.current) return
-
-        // Target rotation based on mouse (smooth lerping)
-        const targetRotationY = mouseTarget.current.x * 0.3 * intensity
-        const targetRotationX = -mouseTarget.current.y * 0.2 * intensity
-
-        // Lerp rotation smoothly
-        currentRotation.current.x += (targetRotationX - currentRotation.current.x) * 0.05
-        currentRotation.current.y += (targetRotationY - currentRotation.current.y) * 0.05
-
-        // Target position offset based on mouse
-        const targetPosX = position[0] + mouseTarget.current.x * 0.5 * intensity
-        const targetPosY = position[1] + mouseTarget.current.y * 0.3 * intensity
-
-        // Lerp position smoothly
-        currentPosition.current.x += (targetPosX - currentPosition.current.x) * 0.08
-        currentPosition.current.y += (targetPosY - currentPosition.current.y) * 0.08
-
-        // Apply transforms
-        meshRef.current.rotation.x = currentRotation.current.x + rotationOffset
-        meshRef.current.rotation.y = currentRotation.current.y
-        meshRef.current.rotation.z = Math.sin(Date.now() * 0.001 + rotationOffset) * 0.05
-
-        meshRef.current.position.x = currentPosition.current.x
-        meshRef.current.position.y = currentPosition.current.y
-    })
-
-    return (
-        <mesh ref={meshRef} position={position}>
-            <planeGeometry args={[size, size * 0.6]} />
-            <meshPhysicalMaterial
-                color={color}
-                transparent
-                opacity={0.15 + intensity * 0.2}
-                roughness={0.1}
-                metalness={0.8}
-                clearcoat={1}
-                clearcoatRoughness={0.1}
-                side={THREE.DoubleSide}
-            />
-        </mesh>
-    )
+// Configuration for shard textures
+// Update these paths to match your actual asset locations
+const PARALLAX_CONFIG = {
+    blurryBackground: '/parallax/blurry-bg.jpg',
+    shards: [
+        { path: '/parallax/shards/shard_1.png', position: [-2, 1, -3] as [number, number, number], size: [3, 2] as [number, number] },
+        { path: '/parallax/shards/shard_2.png', position: [2.5, -0.5, -2.5] as [number, number, number], size: [2.5, 1.5] as [number, number] },
+        { path: '/parallax/shards/shard_3.png', position: [0, 2, -4] as [number, number, number], size: [4, 2.5] as [number, number] },
+        { path: '/parallax/shards/shard_4.png', position: [-3, -1, -1.5] as [number, number, number], size: [2, 1.2] as [number, number] },
+        { path: '/parallax/shards/shard_5.png', position: [3, 1.5, -1] as [number, number, number], size: [1.8, 1] as [number, number] },
+        { path: '/parallax/shards/shard_6.png', position: [-1, -2, -2] as [number, number, number], size: [2.2, 1.4] as [number, number] },
+        { path: '/parallax/shards/shard_7.png', position: [1.5, 2.5, 0] as [number, number, number], size: [1.2, 0.8] as [number, number] },
+        { path: '/parallax/shards/shard_8.png', position: [-2.5, 0.5, 0.5] as [number, number, number], size: [1, 0.6] as [number, number] },
+        { path: '/parallax/shards/shard_9.png', position: [0.5, -1.5, 0] as [number, number, number], size: [1.5, 1] as [number, number] },
+        { path: '/parallax/shards/shard_10.png', position: [-1, 1, 1] as [number, number, number], size: [0.8, 0.5] as [number, number] },
+        { path: '/parallax/shards/shard_11.png', position: [2, -2, 0.5] as [number, number, number], size: [1.3, 0.7] as [number, number] },
+    ]
 }
 
-// Glass-like reveal shard (the main visual pieces)
-function GlassShard({
+// Clear Background Shard - uses texture instead of glass material
+function ClearBackgroundShard({
+    texturePath,
     position,
     size,
     mouseTarget,
     index
 }: {
+    texturePath: string
     position: [number, number, number]
     size: [number, number]
     mouseTarget: React.MutableRefObject<{ x: number; y: number }>
@@ -89,6 +42,9 @@ function GlassShard({
         rotX: 0, rotY: 0, rotZ: 0,
         posX: position[0], posY: position[1], posZ: position[2]
     })
+
+    // Load texture
+    const texture = useLoader(THREE.TextureLoader, texturePath)
 
     const depth = position[2]
     const intensity = (5 - depth) / 5 // Closer shards move more
@@ -135,6 +91,75 @@ function GlassShard({
     return (
         <mesh ref={meshRef} position={position}>
             <planeGeometry args={size} />
+            <meshBasicMaterial
+                map={texture}
+                transparent={true}
+                alphaTest={0.5}
+                side={THREE.DoubleSide}
+            />
+        </mesh>
+    )
+}
+
+// Fallback glass shard (when texture is not available)
+function GlassShard({
+    position,
+    size,
+    mouseTarget,
+    index
+}: {
+    position: [number, number, number]
+    size: [number, number]
+    mouseTarget: React.MutableRefObject<{ x: number; y: number }>
+    index: number
+}) {
+    const meshRef = useRef<THREE.Mesh>(null)
+    const currentState = useRef({
+        rotX: 0, rotY: 0, rotZ: 0,
+        posX: position[0], posY: position[1], posZ: position[2]
+    })
+
+    const depth = position[2]
+    const intensity = (5 - depth) / 5
+    const lerpSpeed = 0.03 + index * 0.005
+
+    useFrame(() => {
+        if (!meshRef.current) return
+
+        const mouse = mouseTarget.current
+
+        const targetRotY = mouse.x * 0.4 * intensity
+        const targetRotX = -mouse.y * 0.3 * intensity
+        const targetRotZ = mouse.x * 0.1 * intensity
+
+        const targetPosX = position[0] + mouse.x * 1.2 * intensity
+        const targetPosY = position[1] + mouse.y * 0.8 * intensity
+        const targetPosZ = position[2] + Math.abs(mouse.x + mouse.y) * 0.3 * intensity
+
+        currentState.current.rotX += (targetRotX - currentState.current.rotX) * lerpSpeed
+        currentState.current.rotY += (targetRotY - currentState.current.rotY) * lerpSpeed
+        currentState.current.rotZ += (targetRotZ - currentState.current.rotZ) * lerpSpeed
+        currentState.current.posX += (targetPosX - currentState.current.posX) * lerpSpeed
+        currentState.current.posY += (targetPosY - currentState.current.posY) * lerpSpeed
+        currentState.current.posZ += (targetPosZ - currentState.current.posZ) * lerpSpeed
+
+        const floatOffset = Math.sin(Date.now() * 0.0008 + index * 0.5) * 0.1
+
+        meshRef.current.rotation.set(
+            currentState.current.rotX,
+            currentState.current.rotY,
+            currentState.current.rotZ
+        )
+        meshRef.current.position.set(
+            currentState.current.posX,
+            currentState.current.posY + floatOffset,
+            currentState.current.posZ
+        )
+    })
+
+    return (
+        <mesh ref={meshRef} position={position}>
+            <planeGeometry args={size} />
             <meshPhysicalMaterial
                 color="#ffffff"
                 transparent
@@ -151,28 +176,144 @@ function GlassShard({
     )
 }
 
+// Individual floating shard for particles
+function FloatingShard({
+    position,
+    size,
+    depth,
+    color,
+    mouseTarget,
+    rotationOffset
+}: {
+    position: [number, number, number]
+    size: number
+    depth: number
+    color: string
+    mouseTarget: React.MutableRefObject<{ x: number; y: number }>
+    rotationOffset: number
+}) {
+    const meshRef = useRef<THREE.Mesh>(null)
+    const currentRotation = useRef({ x: 0, y: 0 })
+    const currentPosition = useRef({ x: position[0], y: position[1] })
+
+    const intensity = 1 / (depth + 1)
+
+    useFrame(() => {
+        if (!meshRef.current) return
+
+        const targetRotationY = mouseTarget.current.x * 0.3 * intensity
+        const targetRotationX = -mouseTarget.current.y * 0.2 * intensity
+
+        currentRotation.current.x += (targetRotationX - currentRotation.current.x) * 0.05
+        currentRotation.current.y += (targetRotationY - currentRotation.current.y) * 0.05
+
+        const targetPosX = position[0] + mouseTarget.current.x * 0.5 * intensity
+        const targetPosY = position[1] + mouseTarget.current.y * 0.3 * intensity
+
+        currentPosition.current.x += (targetPosX - currentPosition.current.x) * 0.08
+        currentPosition.current.y += (targetPosY - currentPosition.current.y) * 0.08
+
+        meshRef.current.rotation.x = currentRotation.current.x + rotationOffset
+        meshRef.current.rotation.y = currentRotation.current.y
+        meshRef.current.rotation.z = Math.sin(Date.now() * 0.001 + rotationOffset) * 0.05
+
+        meshRef.current.position.x = currentPosition.current.x
+        meshRef.current.position.y = currentPosition.current.y
+    })
+
+    return (
+        <mesh ref={meshRef} position={position}>
+            <planeGeometry args={[size, size * 0.6]} />
+            <meshPhysicalMaterial
+                color={color}
+                transparent
+                opacity={0.15 + intensity * 0.2}
+                roughness={0.1}
+                metalness={0.8}
+                clearcoat={1}
+                clearcoatRoughness={0.1}
+                side={THREE.DoubleSide}
+            />
+        </mesh>
+    )
+}
+
+// Blurry background base layer
+function BlurryBackground({
+    texturePath,
+    mouseTarget
+}: {
+    texturePath: string
+    mouseTarget: React.MutableRefObject<{ x: number; y: number }>
+}) {
+    const meshRef = useRef<THREE.Mesh>(null)
+    const currentPos = useRef({ x: 0, y: 0 })
+
+    // Load blurry background texture
+    const texture = useLoader(THREE.TextureLoader, texturePath)
+
+    useFrame(() => {
+        if (!meshRef.current) return
+
+        // Very subtle movement for the background (much less than shards)
+        const targetX = mouseTarget.current.x * 0.1
+        const targetY = mouseTarget.current.y * 0.05
+
+        currentPos.current.x += (targetX - currentPos.current.x) * 0.02
+        currentPos.current.y += (targetY - currentPos.current.y) * 0.02
+
+        meshRef.current.position.x = currentPos.current.x
+        meshRef.current.position.y = currentPos.current.y
+    })
+
+    return (
+        <mesh ref={meshRef} position={[0, 0, -5]}>
+            <planeGeometry args={[20, 12]} />
+            <meshBasicMaterial map={texture} />
+        </mesh>
+    )
+}
+
+// Error boundary for texture loading - shows glass shard as fallback
+function ShardWithFallback({
+    config,
+    mouseTarget,
+    index
+}: {
+    config: { path: string; position: [number, number, number]; size: [number, number] }
+    mouseTarget: React.MutableRefObject<{ x: number; y: number }>
+    index: number
+}) {
+    return (
+        <Suspense
+            fallback={
+                <GlassShard
+                    position={config.position}
+                    size={config.size}
+                    mouseTarget={mouseTarget}
+                    index={index}
+                />
+            }
+        >
+            <ClearBackgroundShard
+                texturePath={config.path}
+                position={config.position}
+                size={config.size}
+                mouseTarget={mouseTarget}
+                index={index}
+            />
+        </Suspense>
+    )
+}
+
 // Main scene with all shards
-function ParallaxScene({ mouseTarget }: { mouseTarget: React.MutableRefObject<{ x: number; y: number }> }) {
-    // Define shard configurations
-    const shards = useMemo(() => [
-        // Larger background pieces
-        { position: [-2, 1, -3] as [number, number, number], size: [3, 2] as [number, number] },
-        { position: [2.5, -0.5, -2.5] as [number, number, number], size: [2.5, 1.5] as [number, number] },
-        { position: [0, 2, -4] as [number, number, number], size: [4, 2.5] as [number, number] },
-
-        // Medium mid-ground pieces
-        { position: [-3, -1, -1.5] as [number, number, number], size: [2, 1.2] as [number, number] },
-        { position: [3, 1.5, -1] as [number, number, number], size: [1.8, 1] as [number, number] },
-        { position: [-1, -2, -2] as [number, number, number], size: [2.2, 1.4] as [number, number] },
-
-        // Small foreground pieces (move the most)
-        { position: [1.5, 2.5, 0] as [number, number, number], size: [1.2, 0.8] as [number, number] },
-        { position: [-2.5, 0.5, 0.5] as [number, number, number], size: [1, 0.6] as [number, number] },
-        { position: [0.5, -1.5, 0] as [number, number, number], size: [1.5, 1] as [number, number] },
-        { position: [-1, 1, 1] as [number, number, number], size: [0.8, 0.5] as [number, number] },
-        { position: [2, -2, 0.5] as [number, number, number], size: [1.3, 0.7] as [number, number] },
-    ], [])
-
+function ParallaxScene({
+    mouseTarget,
+    useTextures = true
+}: {
+    mouseTarget: React.MutableRefObject<{ x: number; y: number }>
+    useTextures?: boolean
+}) {
     // Small floating particles
     const particles = useMemo(() =>
         Array.from({ length: 20 }, (_, i) => ({
@@ -195,16 +336,39 @@ function ParallaxScene({ mouseTarget }: { mouseTarget: React.MutableRefObject<{ 
             <directionalLight position={[5, 5, 5]} intensity={0.5} />
             <directionalLight position={[-5, -5, 5]} intensity={0.3} color="#7c3aed" />
 
-            {/* Glass shards - the main parallax elements */}
-            {shards.map((shard, index) => (
-                <GlassShard
-                    key={`shard-${index}`}
-                    position={shard.position}
-                    size={shard.size}
-                    mouseTarget={mouseTarget}
-                    index={index}
-                />
-            ))}
+            {/* Blurry background base layer */}
+            {useTextures && (
+                <Suspense fallback={null}>
+                    <BlurryBackground
+                        texturePath={PARALLAX_CONFIG.blurryBackground}
+                        mouseTarget={mouseTarget}
+                    />
+                </Suspense>
+            )}
+
+            {/* Clear background shards with parallax */}
+            {useTextures ? (
+                // Texture-based shards
+                PARALLAX_CONFIG.shards.map((config, index) => (
+                    <ShardWithFallback
+                        key={`shard-${index}`}
+                        config={config}
+                        mouseTarget={mouseTarget}
+                        index={index}
+                    />
+                ))
+            ) : (
+                // Fallback glass shards
+                PARALLAX_CONFIG.shards.map((config, index) => (
+                    <GlassShard
+                        key={`shard-${index}`}
+                        position={config.position}
+                        size={config.size}
+                        mouseTarget={mouseTarget}
+                        index={index}
+                    />
+                ))
+            )}
 
             {/* Small floating particles */}
             {particles.map((particle, index) => (
@@ -228,7 +392,6 @@ function ResponsiveCamera({ mouseTarget }: { mouseTarget: React.MutableRefObject
     const currentLook = useRef({ x: 0, y: 0 })
 
     useFrame(() => {
-        // Subtle camera movement following mouse
         const targetX = mouseTarget.current.x * 0.3
         const targetY = mouseTarget.current.y * 0.2
 
@@ -243,7 +406,13 @@ function ResponsiveCamera({ mouseTarget }: { mouseTarget: React.MutableRefObject
     return null
 }
 
-export default function FragmentedParallax({ enabled = true }: { enabled?: boolean }) {
+export default function FragmentedParallax({
+    enabled = true,
+    useTextures = true
+}: {
+    enabled?: boolean
+    useTextures?: boolean
+}) {
     const [mounted, setMounted] = useState(false)
     const mouseTarget = useRef({ x: 0, y: 0 })
     const currentMouse = useRef({ x: 0, y: 0 })
@@ -256,15 +425,12 @@ export default function FragmentedParallax({ enabled = true }: { enabled?: boole
         if (!enabled) return
 
         const handleMouseMove = (e: MouseEvent) => {
-            // Normalize to -1 to 1 range
             currentMouse.current.x = (e.clientX / window.innerWidth) * 2 - 1
             currentMouse.current.y = -(e.clientY / window.innerHeight) * 2 + 1
         }
 
-        // Smooth update loop for mouse target
         let animationId: number
         const updateMouse = () => {
-            // Lerp the target toward current mouse position
             mouseTarget.current.x += (currentMouse.current.x - mouseTarget.current.x) * 0.1
             mouseTarget.current.y += (currentMouse.current.y - mouseTarget.current.y) * 0.1
             animationId = requestAnimationFrame(updateMouse)
@@ -291,7 +457,7 @@ export default function FragmentedParallax({ enabled = true }: { enabled?: boole
                 gl={{ antialias: true, alpha: true }}
             >
                 <ResponsiveCamera mouseTarget={mouseTarget} />
-                <ParallaxScene mouseTarget={mouseTarget} />
+                <ParallaxScene mouseTarget={mouseTarget} useTextures={useTextures} />
             </Canvas>
         </div>
     )
