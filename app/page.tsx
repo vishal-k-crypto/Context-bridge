@@ -7,21 +7,21 @@ import DataFlow from '@/components/canvas/DataFlow'
 import InfiniteTunnel from '@/components/canvas/InfiniteTunnel'
 import CameraRig from '@/components/canvas/CameraRig'
 import Navbar from '@/components/dom/Navbar'
-import LiquidCursor from '@/components/dom/LiquidCursor'
+
 import Preloader from '@/components/dom/Preloader'
-import StatsSection from '@/components/dom/StatsSection'
-import TrustSection from '@/components/dom/TrustSection'
 import EasterEgg from '@/components/ui/EasterEgg'
 import MorphingBlob from '@/components/effects/MorphingBlob'
 import ScrollProgress from '@/components/effects/ScrollProgress'
 import FloatingTags from '@/components/effects/FloatingTags'
 import TimeGreeting from '@/components/effects/TimeGreeting'
 import BackgroundController from '@/components/effects/BackgroundController'
+import FragmentedParallax from '@/components/effects/FragmentedParallax'
 
 // New Immersive Sections
 import ImmersiveHero from '@/components/sections/ImmersiveHero'
 import ParallaxAbout from '@/components/sections/ParallaxAbout'
 import AutomationFlow from '@/components/sections/AutomationFlow'
+import CTASection from '@/components/sections/CTASection'
 import ImmersivePortfolio from '@/components/sections/ImmersivePortfolio'
 import ImmersiveContact from '@/components/sections/ImmersiveContact'
 
@@ -32,7 +32,7 @@ export default function Home() {
       <Preloader />
       <ScrollProgress />
       <Navbar />
-      <LiquidCursor />
+
       <EasterEgg />
       <TimeGreeting />
 
@@ -52,9 +52,12 @@ export default function Home() {
         <DataFlow position={[0, 0, -15]} />
       </Scene>
 
+      {/* Fragmented Parallax - DISABLED for now */}
+      {/* <FragmentedParallax enabled={true} /> */}
+
       {/* DOM Content with Background Controller */}
       <BackgroundController>
-        <main className="relative w-full text-white">
+        <main className="relative z-10 w-full text-white">
 
           {/* Section 1: Hero - Immersive intro */}
           <ImmersiveHero />
@@ -65,14 +68,12 @@ export default function Home() {
           {/* Section 3: Live Demo - Interactive automation flow */}
           <AutomationFlow />
 
+          {/* Section 3.5: CTA - Experience MCP Factory button */}
+          <CTASection />
+
           {/* Section 4: Portfolio - Full-screen project takeovers */}
           <ImmersivePortfolio />
 
-          {/* Section 5: Trust signals */}
-          <TrustSection />
-
-          {/* Section 6: Stats with animated counters */}
-          <StatsSection />
 
           {/* Section 7: Contact - Immersive CTA */}
           <ImmersiveContact />

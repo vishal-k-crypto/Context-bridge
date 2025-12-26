@@ -73,12 +73,20 @@ export default function LiquidCursor() {
 
         const handleMouseLeaveInteractive = () => {
             setIsHovering(false)
+
+            // Sync cursor positions to current mouse position to prevent jumping
+            cursorX = mouseX
+            cursorY = mouseY
+            ringX = mouseX
+            ringY = mouseY
+
             ring.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), border-color 0.4s ease, box-shadow 0.4s ease'
-            ring.style.transform = `translate(${ringX - 24}px, ${ringY - 24}px) scale(1)`
+            ring.style.transform = `translate(${mouseX - 24}px, ${mouseY - 24}px) scale(1)`
             ring.style.borderColor = 'rgba(255, 255, 255, 0.4)'
             ring.style.boxShadow = '0 0 15px rgba(255, 255, 255, 0.1)'
 
             cursor.style.transition = 'transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease'
+            cursor.style.transform = `translate(${mouseX - 6}px, ${mouseY - 6}px)`
             cursor.style.background = '#ffffff'
             cursor.style.boxShadow = '0 0 10px rgba(255, 255, 255, 0.5)'
         }

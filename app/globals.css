@@ -41,8 +41,7 @@ html.lenis body {
 
 /* Base Styles */
 * {
-  cursor: none;
-  /* Custom cursor */
+  /* Remove any global rules that shouldn't apply to all elements */
 }
 
 body {

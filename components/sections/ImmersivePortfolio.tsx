@@ -34,14 +34,14 @@ export default function ImmersivePortfolio() {
     const containerRef = useRef<HTMLDivElement>(null)
     const { scrollYProgress } = useScroll({
         target: containerRef,
-        offset: ['start start', 'end end']
+        offset: ['start start', 'end end'] // Track when section is in viewport
     })
 
     return (
         <section
             ref={containerRef}
             className="relative"
-            style={{ height: `${projects.length * 150}vh` }} // Increased from 100vh to 150vh per project
+            style={{ height: `${projects.length * 70}vh` }} // Reduced to 70vh for tighter transitions
             data-section="portfolio"
         >
             {projects.map((project, index) => {
@@ -65,16 +65,30 @@ export default function ImmersivePortfolio() {
 }
 
 function ProjectCard({ project, index, progress, start, end, total }: any) {
-    // Slower fade transitions for longer visibility
+    // Cards distributed across 0-0.9 of scroll range (leave 0.1 at end for transition)
+    const rangeStart = 0
+    const rangeEnd = 0.9
+    const rangeSpan = rangeEnd - rangeStart
+
+    const adjustedStart = rangeStart + (index * rangeSpan / total)
+    const adjustedEnd = rangeStart + ((index + 1) * rangeSpan / total)
+
+    // First card appears immediately, no fade-in
+    const isFirst = index === 0
+
     const opacity = useTransform(
         progress,
-        [start, start + 0.05, end - 0.1, end],
+        isFirst
+            ? [0, 0.01, adjustedEnd - 0.02, adjustedEnd]
+            : [adjustedStart, adjustedStart + 0.02, adjustedEnd - 0.02, adjustedEnd],
         [0, 1, 1, 0]
     )
     const scale = useTransform(
         progress,
-        [start, start + 0.05, end - 0.1, end],
-        [0.9, 1, 1, 0.9]
+        isFirst
+            ? [0, 0.01, adjustedEnd - 0.02, adjustedEnd]
+            : [adjustedStart, adjustedStart + 0.02, adjustedEnd - 0.02, adjustedEnd],
+        [0.95, 1, 1, 0.95]
     )
 
     return (

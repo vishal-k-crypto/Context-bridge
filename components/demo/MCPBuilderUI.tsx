@@ -170,23 +170,39 @@ export default function MCPBuilderUI({ onIntensityChange }: MCPBuilderUIProps) {
 
     return (
         <div className="relative w-full max-w-2xl mx-auto">
+            {/* Outer glow */}
+            <div
+                className="absolute -inset-1 rounded-3xl opacity-50 blur-xl"
+                style={{
+                    background: 'linear-gradient(135deg, rgba(0, 255, 163, 0.2), rgba(124, 58, 237, 0.2))',
+                }}
+            />
+
             {/* Glassmorphism Container */}
             <motion.div
                 className="relative rounded-3xl overflow-hidden"
                 style={{
-                    background: 'rgba(10, 22, 40, 0.8)',
-                    backdropFilter: 'blur(20px)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    background: 'linear-gradient(135deg, rgba(10, 22, 40, 0.95), rgba(15, 30, 50, 0.9))',
+                    backdropFilter: 'blur(30px)',
+                    border: '1px solid rgba(0, 255, 163, 0.15)',
                     boxShadow: `
-            0 25px 50px -12px rgba(0, 0, 0, 0.5),
-            inset 0 0 60px rgba(0, 255, 163, 0.05)
-          `
+                        0 25px 60px -15px rgba(0, 0, 0, 0.6),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                        inset 0 0 80px rgba(0, 255, 163, 0.03)
+                    `
                 }}
                 layout
             >
                 {/* Header */}
-                <div className="px-8 py-6 border-b border-white/5">
-                    <h2 className="text-2xl font-bold bg-gradient-to-r from-[#00ffa3] to-[#7c3aed] bg-clip-text text-transparent">
+                <div className="px-8 py-6 border-b border-white/10 relative overflow-hidden">
+                    {/* Header glow accent */}
+                    <div
+                        className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-1"
+                        style={{
+                            background: 'linear-gradient(90deg, transparent, rgba(0, 255, 163, 0.5), transparent)',
+                        }}
+                    />
+                    <h2 className="text-2xl font-bold bg-gradient-to-r from-[#00ffa3] via-[#00a8ff] to-[#7c3aed] bg-clip-text text-transparent">
                         AI Employee
                     </h2>
                     <p className="text-white/50 text-sm mt-1">

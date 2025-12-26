@@ -28,7 +28,7 @@ const sectionConfigs: SectionConfig[] = [
     {
         id: 'hero',
         opacity: { enter: 1, peak: 1, exit: 0.6 },
-        blur: { enter: 0, peak: 0, exit: 3 },
+        blur: { enter: 8, peak: 6, exit: 10 }, // Subtle blur on hero for dreamy effect
         contentDensity: 'minimal',
     },
     {
@@ -122,9 +122,9 @@ export default function BackgroundController({ children }: { children: React.Rea
     useEffect(() => {
         if (!containerRef.current) return
 
-        // Set initial values
+        // Set initial values - start with blur for dreamy hero effect
         document.documentElement.style.setProperty('--bg-opacity', '1')
-        document.documentElement.style.setProperty('--bg-blur', '0px')
+        document.documentElement.style.setProperty('--bg-blur', '6px')
 
         // Track scroll velocity for subtle motion blur effect
         let rafId: number

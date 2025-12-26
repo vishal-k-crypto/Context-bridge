@@ -3,7 +3,6 @@
 import { useRef, useEffect, useState } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import Link from 'next/link'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -64,8 +63,8 @@ export default function AutomationFlow() {
             // Pin the section and scrub the progress
             ScrollTrigger.create({
                 trigger: container,
-                start: 'top top',
-                end: '+=200%', // 2x viewport height - tighter experience
+                start: 'center center',
+                end: '+=120%', // Reduced from 200% for faster transitions
                 pin: true,
                 scrub: 0.5, // Near-instant response
                 onUpdate: (self) => {
@@ -366,54 +365,6 @@ export default function AutomationFlow() {
                 </div>
             </motion.div>
 
-            {/* Try AI Employee CTA - shows when flow is complete */}
-            <motion.div
-                className="mt-8"
-                animate={{
-                    opacity: activeStep >= automationSteps.length - 1 ? 1 : 0,
-                    scale: activeStep >= automationSteps.length - 1 ? 1 : 0.9,
-                    y: activeStep >= automationSteps.length - 1 ? 0 : 20
-                }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-            >
-                <Link href="/demo/mcp-builder">
-                    <motion.button
-                        className="relative px-8 py-4 rounded-2xl font-bold text-lg overflow-hidden group"
-                        style={{
-                            background: 'linear-gradient(135deg, #00ffa3 0%, #7c3aed 100%)',
-                            boxShadow: '0 0 40px rgba(0, 255, 163, 0.3), 0 0 80px rgba(124, 58, 237, 0.2)'
-                        }}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                    >
-                        <span className="relative z-10 text-black flex items-center gap-3">
-                            <span>🚀</span>
-                            <span>Try AI Employee</span>
-                            <motion.span
-                                animate={{ x: [0, 5, 0] }}
-                                transition={{ duration: 1.5, repeat: Infinity }}
-                            >
-                                →
-                            </motion.span>
-                        </span>
-                        {/* Shine effect */}
-                        <motion.div
-                            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full"
-                            animate={{ x: ['-100%', '200%'] }}
-                            transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
-                        />
-                        {/* Glow ring */}
-                        <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                            style={{
-                                boxShadow: '0 0 30px rgba(0, 255, 163, 0.5), 0 0 60px rgba(124, 58, 237, 0.3)'
-                            }}
-                        />
-                    </motion.button>
-                </Link>
-                <p className="text-white/40 text-sm mt-3 text-center">
-                    Experience the MCP factory in action
-                </p>
-            </motion.div>
 
             {/* Scroll hint */}
             <motion.div
