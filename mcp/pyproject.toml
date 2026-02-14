@@ -1,0 +1,66 @@
+[project]
+name = "helpermcp"
+version = "0.1.0"
+description = "Autonomous MCP Server Factory - Generate production-ready MCP servers from service names"
+readme = "README.md"
+requires-python = ">=3.12"
+license = {text = "MIT"}
+authors = [
+    {name = "HelperMCP", email = "helper@mcp.dev"}
+]
+keywords = ["mcp", "ai", "automation", "fastmcp", "agents"]
+
+dependencies = [
+    "fastmcp>=2.0",
+    "pydantic>=2.0",
+    "pydantic-settings>=2.0",
+    "httpx>=0.27.0",
+    "crawl4ai>=0.4.0",
+    "docker>=7.0.0",
+    "langgraph>=0.2.0",
+    "jinja2>=3.1.0",
+    "rich>=13.0.0",
+    "typer>=0.12.0",
+    "aiosqlite>=0.20.0",
+    "sentence-transformers>=3.0.0",
+    "numpy>=1.26.0",
+    "websockets>=12.0",
+    "cryptography>=41.0.0",
+]
+
+[project.optional-dependencies]
+visual = [
+    "playwright>=1.40.0",
+    "pyautogui>=0.9.54",
+]
+
+firecrawl = ["firecrawl-py>=1.0.0"]
+supabase = ["supabase>=2.0.0"]
+openai = ["openai>=1.0.0"]
+anthropic = ["anthropic>=0.40.0"]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.24.0",
+    "ruff>=0.8.0",
+]
+
+[project.scripts]
+helpermcp = "helpermcp.main:app"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/helpermcp"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]

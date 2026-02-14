@@ -1,0 +1,60 @@
+{#- FastMCP Tool Template -#}
+@mcp.tool()
+async def {{ tool.name }}(
+{%- for param in tool.parameters %}
+    {{ param.name }}: {{ param.type_hint }} = Field(
+        {% if param.required %}...{% else %}{{ param.default_value }}{% endif %},
+        description="{{ param.description }}",
+        {%- if param.examples %}
+        examples={{ param.examples }},
+        {%- endif %}
+    ),
+{%- endfor %}
+) -> dict[str, Any]:
+    """{{ tool.description }}
+    
+    {%- if tool.intent %}
+    Intent: {{ tool.intent }}
+    {%- endif %}
+    
+    Returns:
+        {{ tool.return_description or 'API response as dictionary' }}
+    
+    Estimated response size: {{ tool.estimated_response_size }}
+    """
+    {%- if tool.api_endpoint %}
+    {%- if tool.http_method in ['POST', 'PUT', 'PATCH'] %}
+    try:
+        response = await client.{{ tool.http_method | lower }}(
+            "{{ tool.api_endpoint }}",
+            json={
+                {%- for param in tool.parameters %}
+                "{{ param.name }}": {{ param.name }},
+                {%- endfor %}
+            },
+        )
+        response.raise_for_status()
+        return response.json()
+    except httpx.HTTPError as e:
+        return {"error": str(e), "status": "failed"}
+    {%- else %}
+    try:
+        response = await client.{{ tool.http_method | lower }}(
+            "{{ tool.api_endpoint }}",
+            {%- if tool.parameters %}
+            params={
+                {%- for param in tool.parameters %}
+                "{{ param.name }}": {{ param.name }},
+                {%- endfor %}
+            },
+            {%- endif %}
+        )
+        response.raise_for_status()
+        return response.json()
+    except httpx.HTTPError as e:
+        return {"error": str(e), "status": "failed"}
+    {%- endif %}
+    {%- else %}
+    # SDK implementation - customize as needed
+    return {"status": "not_implemented", "tool": "{{ tool.name }}"}
+    {%- endif %}

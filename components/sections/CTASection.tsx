@@ -1,11 +1,104 @@
 'use client'
 
-import Link from 'next/link'
-import { motion } from 'framer-motion'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 export default function CTASection() {
+    const [showModal, setShowModal] = useState(false)
+
     return (
         <section className="min-h-[70vh] flex flex-col items-center justify-center px-8 py-20 relative overflow-hidden">
+
+            {/* Coming Soon Modal */}
+            <AnimatePresence>
+                {showModal && (
+                    <motion.div
+                        className="fixed inset-0 z-50 flex items-center justify-center"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                    >
+                        {/* Backdrop */}
+                        <motion.div
+                            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+                            onClick={() => setShowModal(false)}
+                        />
+
+                        {/* Modal Content */}
+                        <motion.div
+                            className="relative z-10 bg-gradient-to-br from-[#0a0a0a] to-[#1a1a2e] border border-[#00ffa3]/30 rounded-3xl p-8 md:p-12 max-w-md mx-4 text-center"
+                            initial={{ scale: 0.8, opacity: 0, y: 20 }}
+                            animate={{ scale: 1, opacity: 1, y: 0 }}
+                            exit={{ scale: 0.8, opacity: 0, y: 20 }}
+                            style={{
+                                boxShadow: '0 0 60px rgba(0, 255, 163, 0.2), 0 0 120px rgba(124, 58, 237, 0.1)'
+                            }}
+                        >
+                            {/* Close button */}
+                            <button
+                                onClick={() => setShowModal(false)}
+                                className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors cursor-pointer"
+                            >
+                                <svg className="w-5 h-5 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+
+                            {/* Rocket Icon */}
+                            <motion.div
+                                className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-[#00a8ff] to-[#00ffa3] flex items-center justify-center"
+                                animate={{ y: [0, -5, 0] }}
+                                transition={{ duration: 2, repeat: Infinity }}
+                            >
+                                <span className="text-4xl">🚀</span>
+                            </motion.div>
+
+                            {/* Title */}
+                            <h3
+                                className="text-3xl md:text-4xl font-bold mb-4"
+                                style={{
+                                    background: 'linear-gradient(135deg, #ffffff 0%, #00ffa3 100%)',
+                                    WebkitBackgroundClip: 'text',
+                                    WebkitTextFillColor: 'transparent',
+                                    backgroundClip: 'text',
+                                }}
+                            >
+                                Coming Soon
+                            </h3>
+
+                            {/* Description */}
+                            <p className="text-white/60 mb-8 leading-relaxed">
+                                We&apos;re putting the finishing touches on something amazing.
+                                The MCP Factory demo will be live very soon!
+                            </p>
+
+                            {/* Animated dots */}
+                            <div className="flex justify-center gap-2 mb-6">
+                                {[0, 1, 2].map((i) => (
+                                    <motion.div
+                                        key={i}
+                                        className="w-2 h-2 rounded-full bg-[#00ffa3]"
+                                        animate={{ opacity: [0.3, 1, 0.3] }}
+                                        transition={{
+                                            duration: 1.5,
+                                            repeat: Infinity,
+                                            delay: i * 0.2
+                                        }}
+                                    />
+                                ))}
+                            </div>
+
+                            {/* Close Button */}
+                            <button
+                                onClick={() => setShowModal(false)}
+                                className="px-8 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-medium transition-colors cursor-pointer"
+                            >
+                                Got it!
+                            </button>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
             {/* Animated background orbs - using theme colors */}
             <motion.div
@@ -127,56 +220,55 @@ export default function CTASection() {
                     <span className="text-[#00ffa3]"> No code required.</span>
                 </motion.p>
 
-                {/* Button */}
+                {/* Button - now opens modal instead of link */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.5 }}
                 >
-                    <Link href="/demo/mcp-builder">
-                        <motion.button
-                            className="relative px-14 py-6 rounded-2xl font-bold text-xl overflow-hidden group cursor-pointer"
+                    <motion.button
+                        onClick={() => setShowModal(true)}
+                        className="relative px-14 py-6 rounded-2xl font-bold text-xl overflow-hidden group cursor-pointer"
+                        style={{
+                            background: 'linear-gradient(135deg, #00a8ff 0%, #00d4aa 50%, #7c3aed 100%)',
+                            boxShadow: '0 0 40px rgba(0, 212, 170, 0.4), 0 0 80px rgba(124, 58, 237, 0.2)',
+                            border: '1px solid rgba(0, 212, 170, 0.5)'
+                        }}
+                        whileHover={{
+                            scale: 1.05,
+                            boxShadow: '0 0 60px rgba(0, 212, 170, 0.6), 0 0 120px rgba(124, 58, 237, 0.4)'
+                        }}
+                        whileTap={{ scale: 0.98 }}
+                        transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+                    >
+                        <span className="relative z-10 text-white flex items-center gap-4">
+                            <span>Experience MCP Factory</span>
+                            <motion.span
+                                animate={{ x: [0, 8, 0] }}
+                                transition={{ duration: 1.5, repeat: Infinity }}
+                                className="text-2xl"
+                            >
+                                →
+                            </motion.span>
+                        </span>
+
+                        {/* Shine effect */}
+                        <motion.div
+                            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                            initial={{ x: '-100%' }}
+                            animate={{ x: ['−100%', '200%'] }}
+                            transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 1.5 }}
+                        />
+
+                        {/* Inner glow */}
+                        <div
+                            className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-all duration-500"
                             style={{
-                                background: 'linear-gradient(135deg, #00a8ff 0%, #00d4aa 50%, #7c3aed 100%)',
-                                boxShadow: '0 0 40px rgba(0, 212, 170, 0.4), 0 0 80px rgba(124, 58, 237, 0.2)',
-                                border: '1px solid rgba(0, 212, 170, 0.5)'
+                                boxShadow: 'inset 0 0 30px rgba(255, 255, 255, 0.2)'
                             }}
-                            whileHover={{
-                                scale: 1.05,
-                                boxShadow: '0 0 60px rgba(0, 212, 170, 0.6), 0 0 120px rgba(124, 58, 237, 0.4)'
-                            }}
-                            whileTap={{ scale: 0.98 }}
-                            transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-                        >
-                            <span className="relative z-10 text-white flex items-center gap-4">
-                                <span>Experience MCP Factory</span>
-                                <motion.span
-                                    animate={{ x: [0, 8, 0] }}
-                                    transition={{ duration: 1.5, repeat: Infinity }}
-                                    className="text-2xl"
-                                >
-                                    →
-                                </motion.span>
-                            </span>
-
-                            {/* Shine effect */}
-                            <motion.div
-                                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                                initial={{ x: '-100%' }}
-                                animate={{ x: ['−100%', '200%'] }}
-                                transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 1.5 }}
-                            />
-
-                            {/* Inner glow */}
-                            <div
-                                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-all duration-500"
-                                style={{
-                                    boxShadow: 'inset 0 0 30px rgba(255, 255, 255, 0.2)'
-                                }}
-                            />
-                        </motion.button>
-                    </Link>
+                        />
+                    </motion.button>
                 </motion.div>
 
                 {/* Trust indicators */}
@@ -210,3 +302,4 @@ export default function CTASection() {
         </section>
     )
 }
+
