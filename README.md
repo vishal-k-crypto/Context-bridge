@@ -44,6 +44,8 @@
 
 ---
 
+<a id="quick-start"></a>
+
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -87,6 +89,8 @@ npm run dev
 Open [http://localhost:3000](http://localhost:3000) to see the magic ✨
 
 ---
+
+<a id="architecture"></a>
 
 ## 🏗️ Architecture
 
@@ -134,6 +138,8 @@ mcp/
 ```
 
 ---
+
+<a id="features"></a>
 
 ## 🎨 Features
 
